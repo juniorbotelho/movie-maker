@@ -7,5 +7,5 @@
 </h3>
 
 <p align="center">
-  🕹️ Andromedia VideoMaker is an automated video and slideshow creator, inspired by Filipe Deschamps' VideoMaker. Still in its initial phase, this [README.md](README.md) should serve to create objectives based on issues and chexkboxes.
+  🕹️ Andromedia VideoMaker is an automated video and slideshow creator, inspired by Filipe Deschamps' VideoMaker. Still in its initial phase, this <a href="/README.md">README.md</a> should serve to create objectives based on issues and chexkboxes.
 </p>
