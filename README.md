@@ -15,8 +15,8 @@
 </p>
 
 <p align="center">
-  <img width="240" height="auto" src="utils/bebop-eat.gif">
-  <img width="240" height="auto" src="utils/bebop-work.gif">
+  <img width="240" height="auto" src="temp/bebop-eat.gif">
+  <img width="240" height="auto" src="temp/bebop-work.gif">
 </p>
 
 <p align="center">

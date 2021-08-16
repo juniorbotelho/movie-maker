@@ -1,5 +1,5 @@
 import { config as UniversalEnvConfig } from 'dotenv'
-import { UECUtil } from 'utils/scripts/UEC.Util'
+import { UECUtil } from 'config/scripts/UEC.Util'
 
 const UniversalEnvUtil = new UECUtil()
 
