@@ -12,7 +12,7 @@ declare type CLIToolbox = (
  */
 export async function run(argv: CLIToolbox): Promise<GluegunToolbox> {
   const cli = build()
-    .brand('cli')
+    .brand('videomaker')
     .src(__dirname)
     .plugins('../node_modules', {
       matching: 'videomaker-*',

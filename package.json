@@ -20,7 +20,7 @@
   "scripts": {
     "start": "node -r 'module-alias/register' build/index.js",
     "dev": "nodemon --watch 'src/' --exec 'ts-node -r 'tsconfig-paths/register' src/index.ts' -e ts",
-    "cli": "node cli/bin/cli",
+    "videomaker": "node cli/bin/cli",
     "prebuild": "rimraf build/*",
     "build": "tsc -p tsconfig.json"
   },
