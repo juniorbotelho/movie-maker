@@ -8,10 +8,11 @@
   "private": true,
   "types": "build/types/types.d.ts",
   "bin": {
-    "cli": "bin/cli"
+    "cli": "cli/bin/cli"
   },
   "_moduleAliases": {
     "app": "build/app",
+    "cli": "build/cli",
     "config": "build/config",
     "server": "build/server",
     "providers": "build/providers"

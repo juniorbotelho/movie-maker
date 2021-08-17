@@ -1,1 +1,2 @@
 // export types
+export default {}
