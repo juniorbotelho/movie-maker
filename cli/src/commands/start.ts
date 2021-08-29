@@ -1,6 +1,6 @@
-import { GluegunCommand } from 'gluegun'
+import { GluegunCommand, GluegunToolbox } from 'gluegun'
 
-const command: GluegunCommand = {
+const command: GluegunCommand<GluegunToolbox> = {
   name: 'start',
   alias: ['s'],
   description: 'Responsible for initiating the interaction process',

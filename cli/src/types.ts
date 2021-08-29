@@ -2,7 +2,7 @@
 export default {}
 
 declare module 'gluegun' {
-  export interface GluegunToolbox {
+  interface GluegunToolbox {
     foo: () => void
   }
 }
