@@ -1,0 +1,13 @@
+{
+  "verbose": false,
+  "delay": 200,
+  "ignore": [
+    "__tests__/*.test.ts",
+    "node_modules/*",
+    "fixtures/*"
+  ],
+  "execMap": {
+    "sucrase": "sucrase --require sucrase/register",
+    "typescript": "ts-node --require ts-node/register"
+  }
+}
