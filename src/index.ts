@@ -1,1 +1,1 @@
-import 'app/App.EnvLoader'
+import '@App/Environment'
