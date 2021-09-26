@@ -24,7 +24,7 @@
     "start": "node --require module-alias/register build/src/index.js",
     "dev:sucrase": "nodemon --watch '**/*' --require tsconfig-paths/register --config",
     "dev:typescript": "nodemon --watch '**/*' --require tsconfig-paths/register --config",
-    "videomaker": "node cli/bin/cli",
+    "dev:videomaker": "node --require tsconfig-paths/register cli/bin/cli",
     "prebuild": "rimraf build/*",
     "build": "tsc -p tsconfig.json"
   },

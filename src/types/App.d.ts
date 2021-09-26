@@ -2,6 +2,7 @@ import * as Environment from '@App/Environment'
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
 import * as ReadLine from '@Utilities/ReadLine'
+import * as State from '@Utilities/State'
 
 export type ErrorLogging = {
   error?: string
@@ -19,6 +20,7 @@ export type MainCallback = (fnCallback: {
     sentry: typeof Sentry.Context
   }
   application: {
+    state: typeof State.Context
     readline: typeof ReadLine.Context
   }
 }) => void

@@ -17,14 +17,16 @@ const App = ReadLine.createInterface({
 
 const Wrapper = () => ({
   question: (question: string) =>
-    new Promise<string>(() => {
+    new Promise<string>((resolve, reject) => {
       App.question(question, (answer) => {
         try {
+          resolve(answer)
           Promise.resolve(answer)
-          App.close() // Close event
+          App.close()
         } catch (error) {
           Sentry.Context.captureException(error)
           logger.error(error)
+          reject(error)
           Promise.reject(error)
         } finally {
           transaction.finish()
