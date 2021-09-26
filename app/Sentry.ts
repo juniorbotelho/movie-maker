@@ -3,7 +3,7 @@ import * as Tracing from '@sentry/tracing'
 import * as Environment from '@App/Environment'
 
 Sentry.init({
-  dsn: Environment.ENVContext().Sentry().dsn,
+  dsn: Environment.ENV.Sentry().dsn,
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.

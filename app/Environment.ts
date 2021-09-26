@@ -25,7 +25,7 @@ const localEnv = {}
  * to export a module of the project's environment
  * variable methods one by one.
  */
-export const ENVContext = () => ({
+const ENVContext = () => ({
   ...Object.defineProperty(localEnv, 'ctx', {
     enumerable: false,
     configurable: false,
@@ -48,3 +48,5 @@ export const ENVContext = () => ({
    */
   globalContext: (itemName: string) => CPUNode[itemName],
 })
+
+export const ENV = ENVContext()

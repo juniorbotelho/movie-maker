@@ -14,7 +14,7 @@ export type LoggerProps = {
 
 export type MainCallback = (fnCallback: {
   ctx: {
-    environment: typeof Environment.ENVContext
+    environment: typeof Environment.ENV
     logger: typeof Logger.Logging
     sentry: typeof Sentry.Context
   }

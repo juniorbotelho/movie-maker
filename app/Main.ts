@@ -7,7 +7,7 @@ import { MainCallback } from '@Type/App'
 export const Application = (fnCallback: MainCallback) => {
   fnCallback({
     ctx: {
-      environment: Environment.ENVContext,
+      environment: Environment.ENV,
       logger: Logger.Logging,
       sentry: Sentry.Context,
     },

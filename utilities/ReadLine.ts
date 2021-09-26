@@ -33,4 +33,10 @@ const Wrapper = () => ({
     }),
 })
 
+/**
+ * Just the keys of the encapsulated object that will serve
+ * as the basis for all readline functions, Only keys
+ * encapsulated object that will serve as the basis for all
+ * functions of the 'readline'.
+ */
 export const Context = Wrapper()
