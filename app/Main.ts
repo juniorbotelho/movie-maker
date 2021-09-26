@@ -1,6 +1,7 @@
 import * as Environment from '@App/Environment'
 import * as Logger from '@App/Logger'
 import * as Sentry from '@App/Sentry'
+import * as ReadLine from '@Utilities/ReadLine'
 import { MainCallback } from '@Type/App'
 
 export const Application = (fnCallback: MainCallback) => {
@@ -10,6 +11,8 @@ export const Application = (fnCallback: MainCallback) => {
       logger: Logger.Logging,
       sentry: Sentry.Context,
     },
-    application: '',
+    application: {
+      readline: ReadLine.Context,
+    },
   })
 }
