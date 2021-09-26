@@ -6,36 +6,55 @@ const command: GluegunCommand<GluegunToolbox> = {
   alias: ['s'],
   description: 'Search for the desired term by the selected engine.',
   run: async (toolbox) => {
-    Main.Application(async ({ application }) => {
+    Main.Application(async ({ ctx, application }) => {
       /**
-       * Object responsible for maintaining temporary
-       * settings for searches and terms initially
-       * conditioned to Wikipedia.
+       * Applies sentry support via CLI, to gather
+       * information about possible errors in this context.
        */
-      const localContent = {
-        maximumSentences: 7,
-        search: '',
-        prefix: '',
-      }
-
-      /**
-       * Prompts and inputs that will be handled and
-       * transformed into user initial settings.
-       */
-      const search = await application.readline.question('Type a search term: ')
-
-      const selectedIndex = await toolbox.prompt.ask({
-        type: 'select',
-        name: 'term',
-        message: 'Choose one option',
-        choices: ['Who is', 'What is', 'The history of'],
+      const transaction = ctx.sentry.startTransaction({
+        name: '',
+        op: 'Cli/Commands/Search',
+        description: '',
       })
 
-      localContent.search = search
-      localContent.prefix = selectedIndex.term
+      try {
+        /**
+         * Object responsible for maintaining temporary
+         * settings for searches and terms initially
+         * conditioned to Wikipedia.
+         */
+        const localContent = {
+          maximumSentences: 7,
+          search: '',
+          prefix: '',
+        }
 
-      // Statefull
-      application.state.save(localContent)
+        /**
+         * Prompts and inputs that will be handled and
+         * transformed into user initial settings.
+         */
+        const search = await application.readline.question(
+          'Type a search term: '
+        )
+
+        const selectedIndex = await toolbox.prompt.ask({
+          type: 'select',
+          name: 'term',
+          message: 'Choose one option',
+          choices: ['Who is', 'What is', 'The history of'],
+        })
+
+        localContent.search = search
+        localContent.prefix = selectedIndex.term
+
+        // Statefull
+        application.state.save(localContent)
+      } catch (error) {
+        toolbox.print.error(error)
+        ctx.sentry.captureException(error)
+      } finally {
+        transaction.finish()
+      }
     })
   },
 }
