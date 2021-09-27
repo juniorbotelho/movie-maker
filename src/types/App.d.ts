@@ -1,11 +1,11 @@
 import * as Environment from '@App/Environment'
 import * as Algorithmia from '@App/Algorithmia'
-import * as Watson from '@App/Watson'
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
 import * as ReadLine from '@Utilities/ReadLine'
 import * as State from '@Utilities/State'
 import * as Sentence from '@Utilities/Sentence'
+import * as Watson from '@Utilities/Watson'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 

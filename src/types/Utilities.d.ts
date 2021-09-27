@@ -4,11 +4,9 @@ export type RuleSave = {
   prefix: string
   sourceContentOriginal?: string
   sourceContentSanitized?: string
-  sentences?: [
-    {
-      text: string
-      keywords: string[]
-      images: string[]
-    }
-  ]
+  sentences?: {
+    text: string
+    keywords: string[]
+    images: string[]
+  }[]
 }
