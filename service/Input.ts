@@ -1,4 +1,5 @@
 import * as Main from '@App/Main'
+import { RuleSave } from '@Type/Utilities'
 import { GluegunToolbox } from 'gluegun'
 
 const Service = () => ({
@@ -20,7 +21,7 @@ const Service = () => ({
          * settings for searches and terms initially
          * conditioned to Wikipedia.
          */
-        const localContent = {
+        const localContent: RuleSave = {
           maximumSentences: 7,
           searchTerm: '',
           prefix: '',

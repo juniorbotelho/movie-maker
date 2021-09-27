@@ -1,4 +1,5 @@
 import * as Main from '@App/Main'
+import { RuleSave } from '@Type/Utilities'
 
 const Service = () => ({
   text: () =>
@@ -9,7 +10,21 @@ const Service = () => ({
         description: 'Get survey data via algorithmia.',
       })
 
-      const content = application.state.load()
+      const content: RuleSave = application.state.load()
+
+      const Sanitize = () => ({
+        standardMarkdown: (text: RuleSave) =>
+          text.sourceContentOriginal
+            .split('\n')
+            .filter((line) => {
+              if (line.trim().length == 0 || line.trim().startsWith('='))
+                return false
+              return true
+            })
+            .join(' ')
+            .replace(/\((?:\([^()]*\)|[^()])*\)/gm, '')
+            .replace(/ {2}/g, ' '),
+      })
 
       try {
         /**
@@ -23,7 +38,15 @@ const Service = () => ({
             lang: 'en',
           })
 
-        console.log(article.get())
+        /**
+         * After returning the text content from wikipedia,
+         * you need to save it as part of the state
+         * content of the content.json file.
+         */
+        content.sourceContentOriginal = article.get().content
+        content.sourceContentSanitized = Sanitize().standardMarkdown(content)
+
+        application.state.save(content)
       } catch (error) {
         ctx.logger({}).error(error)
         ctx.sentry.captureException(error)
