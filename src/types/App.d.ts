@@ -11,6 +11,10 @@ import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
 
+export type InfoLogging = {
+  message: string
+}
+
 export type ErrorLogging = {
   error?: string
   message: string
