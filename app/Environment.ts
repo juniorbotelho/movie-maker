@@ -41,6 +41,10 @@ const ENVContext = () => ({
     dsn: CPUNode['DSN_CONNECT'],
   }),
 
+  Algorithmia: () => ({
+    apiKey: CPUNode['ALGO_APIKEY'],
+  }),
+
   /**
    * Pay attention to this call, this is where the global
    * environment variables will be encapsulated and distributed

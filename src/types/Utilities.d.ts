@@ -1,5 +1,5 @@
 export type RuleSave = {
   maximumSentences: number
-  search: string
+  searchTerm: string
   prefix: string
 }
