@@ -2,15 +2,15 @@ import * as Main from '@App/Main'
 import { GluegunToolbox } from 'gluegun'
 
 const Service = () => ({
-  input: (toolbox: GluegunToolbox) =>
+  input: (toolbox: GluegunToolbox, fnCallback) =>
     Main.Application(async ({ ctx, application }) => {
       /**
        * Applies sentry support via CLI, to gather
        * information about possible errors in this context.
        */
       const transaction = ctx.sentry.startTransaction({
-        name: 'Search CLI Command',
-        op: 'Cli/Commands/Search',
+        name: 'Input Command Service',
+        op: 'Service/Input',
         description: 'Get survey data via user input.',
       })
 
@@ -41,11 +41,12 @@ const Service = () => ({
           choices: ['Who is', 'What is', 'The history of'],
         })
 
-        localContent.searchTerm = search.toUpperCase()
+        localContent.searchTerm = search
         localContent.prefix = selectedIndex.term
 
         // Statefull
         application.state.save(localContent)
+        fnCallback()
       } catch (error) {
         toolbox.print.error(error)
         ctx.sentry.captureException(error)

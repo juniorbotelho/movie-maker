@@ -106,3 +106,6 @@ dist
 # Build
 build
 dist
+
+# Personal
+/temp/*[!.gif]
