@@ -16,7 +16,7 @@ const structureData = {
   prefix: '',
   sourceContentOriginal: '',
   sourceContentSanitized: '',
-  sentences: [{}],
+  sentences: [],
 }
 
 const Wrapper = () => ({

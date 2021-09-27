@@ -5,7 +5,7 @@ import * as ReadLine from 'readline'
 const logger = Logger.Logging({})
 
 const transaction = Sentry.Context.startTransaction({
-  name: 'Global ReadLine Function',
+  name: 'ReadLine',
   op: 'Utilities/ReadLine',
   description: 'Serves to add synchronous readline support to the application.',
 })
@@ -37,8 +37,6 @@ const Wrapper = () => ({
 
 /**
  * Just the keys of the encapsulated object that will serve
- * as the basis for all readline functions, Only keys
- * encapsulated object that will serve as the basis for all
- * functions of the 'readline'.
+ * as the basis for all readline functions.
  */
 export const Context = Wrapper()
