@@ -2,7 +2,7 @@ import * as FileSystem from 'fs'
 import * as Path from 'path'
 import { RuleSave } from '@Type/Utilities'
 
-const content = Path.resolve('temp/content.JSON')
+const content = Path.resolve('temp/content.json')
 const scripting = Path.resolve('temp/script.js')
 
 const Wrapper = () => ({
