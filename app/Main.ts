@@ -1,5 +1,6 @@
 import * as Environment from '@App/Environment'
 import * as Algorithmia from '@App/Algorithmia'
+import * as Watson from '@App/Watson'
 import * as Logger from '@App/Logger'
 import * as Sentry from '@App/Sentry'
 import * as ReadLine from '@Utilities/ReadLine'
@@ -22,6 +23,7 @@ export const Application = (fnCallback: MainCallback) =>
         state: State.Context,
         readline: ReadLine.Context,
         sentences: Sentence.Context,
+        watson: Watson.Context,
       },
       service: {
         input: Input.Context.input,

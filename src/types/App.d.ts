@@ -1,5 +1,6 @@
 import * as Environment from '@App/Environment'
 import * as Algorithmia from '@App/Algorithmia'
+import * as Watson from '@App/Watson'
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
 import * as ReadLine from '@Utilities/ReadLine'
@@ -28,6 +29,7 @@ export type MainCallback = (fnCallback: {
     state: typeof State.Context
     readline: typeof ReadLine.Context
     sentences: typeof Sentence.Context
+    watson: typeof Watson.Context
   }
   service: {
     input: typeof Input.Context.input

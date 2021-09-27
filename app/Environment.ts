@@ -45,6 +45,15 @@ const ENVContext = () => ({
     apiKey: CPUNode['ALGO_APIKEY'],
   }),
 
+  Watson: () => ({
+    apikey: CPUNode['IBM_APIKEY'],
+    iam_apikey_description: CPUNode['IBM_IAM_APIKEY_DESCRIPTION'],
+    iam_apikey_name: CPUNode['IBM_IAM_APIKEY_NAME'],
+    iam_role_crn: CPUNode['IBM_IAM_ROLE_CRN'],
+    iam_serviceid_crn: CPUNode['IBM_IAM_SERVICEID_CRN'],
+    url: CPUNode['IBM_URL'],
+  }),
+
   /**
    * Pay attention to this call, this is where the global
    * environment variables will be encapsulated and distributed
