@@ -23,7 +23,7 @@ export async function run(argv: CommandArgs): Promise<ContextToolbox> {
       name: 'start',
       alias: ['s'],
       description: 'Search for the desired term by the selected engine.',
-      run: (toolbox: ContextToolbox) => toolbox.input(),
+      run: (toolbox: ContextToolbox) => toolbox.services(),
     })
     .help()
     .version()

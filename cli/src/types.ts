@@ -3,6 +3,6 @@ export default {}
 
 declare module 'gluegun' {
   interface GluegunToolbox {
-    input: () => void
+    services: () => void
   }
 }

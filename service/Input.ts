@@ -2,7 +2,7 @@ import * as Main from '@App/Main'
 import { GluegunToolbox } from 'gluegun'
 
 const Service = () => ({
-  input: (toolbox: GluegunToolbox) => {
+  input: (toolbox: GluegunToolbox) =>
     Main.Application(async ({ ctx, application }) => {
       /**
        * Applies sentry support via CLI, to gather
@@ -22,7 +22,7 @@ const Service = () => ({
          */
         const localContent = {
           maximumSentences: 7,
-          search: '',
+          searchTerm: '',
           prefix: '',
         }
 
@@ -41,7 +41,7 @@ const Service = () => ({
           choices: ['Who is', 'What is', 'The history of'],
         })
 
-        localContent.search = search
+        localContent.searchTerm = search.toUpperCase()
         localContent.prefix = selectedIndex.term
 
         // Statefull
@@ -52,8 +52,7 @@ const Service = () => ({
       } finally {
         transaction.finish()
       }
-    })
-  },
+    }),
 })
 
 /**
