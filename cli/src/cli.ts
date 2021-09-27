@@ -19,6 +19,12 @@ export async function run(argv: CommandArgs): Promise<ContextToolbox> {
       hidden: true,
       required: false,
     })
+    .defaultCommand({
+      name: 'start',
+      alias: ['s'],
+      description: 'Search for the desired term by the selected engine.',
+      run: (toolbox: ContextToolbox) => toolbox.input(),
+    })
     .help()
     .version()
     .create()

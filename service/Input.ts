@@ -1,20 +1,17 @@
-import { GluegunCommand, GluegunToolbox } from 'gluegun'
 import * as Main from '@App/Main'
+import { GluegunToolbox } from 'gluegun'
 
-const command: GluegunCommand<GluegunToolbox> = {
-  name: 'search',
-  alias: ['s'],
-  description: 'Search for the desired term by the selected engine.',
-  run: async (toolbox) => {
+const Service = () => ({
+  input: (toolbox: GluegunToolbox) => {
     Main.Application(async ({ ctx, application }) => {
       /**
        * Applies sentry support via CLI, to gather
        * information about possible errors in this context.
        */
       const transaction = ctx.sentry.startTransaction({
-        name: '',
+        name: 'Search CLI Command',
         op: 'Cli/Commands/Search',
-        description: '',
+        description: 'Get survey data via user input.',
       })
 
       try {
@@ -57,10 +54,10 @@ const command: GluegunCommand<GluegunToolbox> = {
       }
     })
   },
-}
+})
 
 /**
- * the module should be exported by default
- * for everything to work smoothly.
+ * Just the keys of the encapsulated object that will serve
+ * as the basis for all readline functions.
  */
-export default { ...command }
+export const Context = Service().input
