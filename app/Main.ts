@@ -18,7 +18,7 @@ export const Application = (fnCallback: MainCallback) => {
       readline: ReadLine.Context,
     },
     service: {
-      input: Input.Context,
+      input: Input.Context.input,
     },
   })
 }

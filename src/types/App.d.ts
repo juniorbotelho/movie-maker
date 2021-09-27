@@ -25,6 +25,6 @@ export type MainCallback = (fnCallback: {
     readline: typeof ReadLine.Context
   }
   service: {
-    input: typeof Input.Context
+    input: typeof Input.Context.input
   }
 }) => void

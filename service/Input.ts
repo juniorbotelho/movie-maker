@@ -60,4 +60,4 @@ const Service = () => ({
  * Just the keys of the encapsulated object that will serve
  * as the basis for all readline functions.
  */
-export const Context = Service().input
+export const Context = Service()
