@@ -1,5 +1,5 @@
 import * as Main from '@App/Main'
-import { RuleSave } from '@Type/Utilities'
+import * as Type from '@Type/Global'
 
 const Service = () => ({
   text: () =>
@@ -10,11 +10,11 @@ const Service = () => ({
         description: 'Get survey data via algorithmia.',
       })
 
-      const content: RuleSave = application.state.load()
+      const content: Type.RuleState = application.state.load()
       const watson = application.watson.nlu()
 
       const Sanitize = () => ({
-        standardMarkdown: (text: RuleSave) =>
+        standardMarkdown: (text: Type.RuleState) =>
           text.sourceContentOriginal
             .split('\n')
             .filter((line) => {

@@ -8,6 +8,7 @@ import * as Sentence from '@Utilities/Sentence'
 import * as Watson from '@Utilities/Watson'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
+import * as Image from '@Service/Image'
 
 export type ErrorLogging = {
   error?: string
@@ -34,5 +35,6 @@ export type MainCallback = (fnCallback: {
   service: {
     input: typeof Input.Context.input
     text: typeof Text.Context.text
+    image: typeof Image.Context.image
   }
 }) => void

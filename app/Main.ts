@@ -8,9 +8,10 @@ import * as Sentence from '@Utilities/Sentence'
 import * as Watson from '@Utilities/Watson'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
-import { MainCallback } from '@Type/App'
+import * as Image from '@Service/Image'
+import * as Type from '@Type/App'
 
-export const Application = (fnCallback: MainCallback) =>
+export const Application = (fnCallback: Type.MainCallback) =>
   new Promise<void>(() => {
     fnCallback({
       ctx: {
@@ -28,6 +29,7 @@ export const Application = (fnCallback: MainCallback) =>
       service: {
         input: Input.Context.input,
         text: Text.Context.text,
+        image: Image.Context.image,
       },
     })
   })

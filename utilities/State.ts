@@ -1,6 +1,6 @@
 import * as FileSystem from 'fs'
 import * as Path from 'path'
-import { RuleSave } from '@Type/Utilities'
+import * as Type from '@Type/Global'
 
 const content = Path.resolve('temp/content.json')
 
@@ -20,11 +20,11 @@ const structureData = {
 }
 
 const Wrapper = () => ({
-  save: (rules: RuleSave) => {
+  save: (rules: Type.RuleState) => {
     const rulesAsJSON = JSON.stringify({ ...structureData, ...rules }, null, 2)
     return FileSystem.writeFileSync(content, rulesAsJSON)
   },
-  saveScript: (rules: RuleSave) => {
+  saveScript: (rules: Type.RuleState) => {
     const rulesAsJS = JSON.stringify({ ...structureData, ...rules }, null, 2)
     const script = 'var content = {value}'.replace('{value}', rulesAsJS)
     return FileSystem.writeFileSync(scripting, script)

@@ -1,4 +1,4 @@
-export type RuleSave = {
+export type RuleState = {
   maximumSentences?: number
   searchTerm: string
   prefix: string

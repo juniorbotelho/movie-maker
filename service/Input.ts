@@ -1,9 +1,9 @@
+import * as Gluegun from 'gluegun'
 import * as Main from '@App/Main'
-import { RuleSave } from '@Type/Utilities'
-import { GluegunToolbox } from 'gluegun'
+import * as Type from '@Type/Global'
 
 const Service = () => ({
-  input: (toolbox: GluegunToolbox, fnCallback) =>
+  input: (toolbox: Gluegun.GluegunToolbox, fnCallback) =>
     Main.Application(async ({ ctx, application }) => {
       /**
        * Applies sentry support via CLI, to gather
@@ -21,7 +21,7 @@ const Service = () => ({
          * settings for searches and terms initially
          * conditioned to Wikipedia.
          */
-        const localContent: RuleSave = {
+        const localContent: Type.RuleState = {
           maximumSentences: 7,
           searchTerm: '',
           prefix: '',
