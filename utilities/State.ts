@@ -12,17 +12,11 @@ const scripting = Path.resolve('temp/script.js')
  * services started.
  */
 const structureData = {
-  searchTerm: '...',
-  prefix: '...',
-  sourceContentOriginal: '...',
-  sourceContentSanitized: '...',
-  sentences: [
-    {
-      text: '...',
-      keywords: ['...'],
-      images: ['...'],
-    },
-  ],
+  searchTerm: '',
+  prefix: '',
+  sourceContentOriginal: '',
+  sourceContentSanitized: '',
+  sentences: [{}],
 }
 
 const Wrapper = () => ({

@@ -46,6 +46,22 @@ const Service = () => ({
         content.sourceContentOriginal = article.get().content
         content.sourceContentSanitized = Sanitize().standardMarkdown(content)
 
+        /**
+         * Adds all sentences to the scope of
+         * attributes belonging to sanitized
+         * text sentences.
+         */
+        application
+          .sentences(content.sourceContentSanitized)
+          .forEach((sentence) => {
+            content.sentences.push({
+              text: sentence,
+              keywords: [],
+              images: [],
+            })
+          })
+
+        // Save
         application.state.save(content)
       } catch (error) {
         ctx.logger({}).error(error)

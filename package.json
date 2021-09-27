@@ -34,11 +34,13 @@
     "@sentry/tracing": "^6.13.2",
     "algorithmia": "^0.3.10",
     "gluegun": "^4.6.1",
-    "module-alias": "2.2.2"
+    "module-alias": "2.2.2",
+    "sbd": "^1.0.19"
   },
   "devDependencies": {
     "@sentry/types": "^6.13.2",
     "@types/node": "12.7.11",
+    "@types/sbd": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "dotenv": "10.0.0",
