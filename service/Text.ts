@@ -11,6 +11,7 @@ const Service = () => ({
       })
 
       const content: RuleSave = application.state.load()
+      const watson = application.watson.nlu()
 
       const Sanitize = () => ({
         standardMarkdown: (text: RuleSave) =>
@@ -60,6 +61,32 @@ const Service = () => ({
               images: [],
             })
           })
+
+        /**
+         * Section responsible for Watson interpretation and
+         * for generating tags and keywords that will be
+         * necessary to perform searches and others.
+         */
+        content.sentences = content.sentences.slice(0, content.maximumSentences)
+
+        await Promise.all(
+          content.sentences.map(async (sentence) => {
+            const { result } = await watson.analyze({
+              text: sentence.text,
+              features: {
+                keywords: {},
+              },
+            })
+
+            /**
+             * It has the function of adding the necessary
+             * keywords to the sentence object.
+             */
+            sentence.keywords = result.keywords
+              .map((textualSentenceItem) => textualSentenceItem.text)
+              .flat()
+          })
+        )
 
         // Save
         application.state.save(content)
