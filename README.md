@@ -27,4 +27,5 @@
 
 ## #1 Project Timeline
 - [ ] create robots as services to be called by cli and api #2
-- [ ] text service and its dependencies #3
+- [X] text service and its dependencies #3
+- [ ] create the service to handle image processing #4
