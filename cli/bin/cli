@@ -3,7 +3,7 @@
 
 /* tslint:disable */
 // check if we're running in dev mode
-var devMode = require('fs').existsSync(`${__dirname}/../src`)
+var devMode = require('fs').existsSync(`${__dirname}/../`)
 // or want to "force" running the compiled version with --compiled-build
 var wantsCompiled = process.argv.indexOf('--compiled-build') >= 0
 
@@ -15,7 +15,7 @@ if (wantsCompiled || !devMode) {
   // hook into ts-node so we can run typescript on the fly
   require('ts-node').register({ project: `${__dirname}/../../tsconfig.json` })
   // run the CLI with the current process arguments
-  require(`${__dirname}/../src/cli`).run(process.argv)
+  require(`${__dirname}/../cli`).run(process.argv)
 }
 
 
