@@ -6,6 +6,7 @@ import * as ReadLine from '@Utilities/ReadLine'
 import * as State from '@Utilities/State'
 import * as Sentence from '@Utilities/Sentence'
 import * as Watson from '@Utilities/Watson'
+import * as Google from '@Utilities/Google'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -25,6 +26,7 @@ export const Application = (fnCallback: Type.MainCallback) =>
         readline: ReadLine.Context,
         sentences: Sentence.Context,
         watson: Watson.Context,
+        google: Google.Context,
       },
       service: {
         input: Input.Context.input,

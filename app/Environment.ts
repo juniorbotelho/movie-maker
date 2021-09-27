@@ -57,6 +57,11 @@ const ENVContext = () => ({
     },
   }),
 
+  Google: () => ({
+    apiKey: CPUNode['GOOGLE_API_KEY'],
+    searchEngineId: CPUNode['GOOGLE_SEARCH_ENGINE_ID'],
+  }),
+
   /**
    * Pay attention to this call, this is where the global
    * environment variables will be encapsulated and distributed
