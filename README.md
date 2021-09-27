@@ -26,4 +26,4 @@
 <p>
 
 ## #1 Project Timeline
-- [ ] Nothing to see here for now...
+- [ ] create robots as services to be called by cli and api #2
