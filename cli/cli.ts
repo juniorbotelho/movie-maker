@@ -1,17 +1,15 @@
-import { build, GluegunToolbox as ContextToolbox } from 'gluegun'
-import { Options } from 'gluegun/build/types/domain/options'
-
-declare type CommandArgs = (
-  rawCommand?: string | Options,
-  extraOptions?: Options
-) => Promise<ContextToolbox>
+import * as Gluegun from 'gluegun'
+import * as Main from '@App/Main'
+import * as Types from '@Cli/types'
 
 /**
  * Create an initial gluegun command
- * line executable, the cli and kick it off
+ * line executable, the cli and kick it off.
  */
-export async function run(argv: CommandArgs): Promise<ContextToolbox> {
-  const cli = build()
+export async function run(
+  argv: Types.CommandArgs
+): Promise<Gluegun.GluegunToolbox> {
+  const cli = Gluegun.build()
     .brand('videomaker')
     .src(__dirname)
     .plugins('../node_modules', {
@@ -23,7 +21,13 @@ export async function run(argv: CommandArgs): Promise<ContextToolbox> {
       name: 'start',
       alias: ['s'],
       description: 'Search for the desired term by the selected engine.',
-      run: (toolbox: ContextToolbox) => toolbox.services(),
+      run: (toolbox: Gluegun.GluegunToolbox) => {
+        Main.Application(({ service }) => {
+          service.input(toolbox, async () => {
+            await service.text()
+          })
+        })
+      },
     })
     .help()
     .version()
