@@ -5,17 +5,18 @@ function infoLogging({ message }: Type.InfoLogging) {
   message && console.info(Chalk.blue(message))
 }
 
-function errorLogging({ error, message }: Type.ErrorLogging) {
+function errorLogging({ error }: Type.ErrorLogging) {
   error && console.error(Chalk.red(error))
-  message && console.error(Chalk.red(message))
 }
 
 function successLogging({ message }: Type.InfoLogging) {
   message && console.log(Chalk.green(message))
 }
 
-export const Logging = ({ error }: Type.LoggerProps) => ({
-  error: (message: string) => errorLogging({ error, message }),
+const Logging = () => ({
+  error: (error: string) => errorLogging({ error }),
   info: (message: string) => infoLogging({ message }),
   success: (message: string) => successLogging({ message }),
 })
+
+export const Context = Logging()

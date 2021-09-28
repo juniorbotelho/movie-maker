@@ -16,19 +16,14 @@ export type InfoLogging = {
 }
 
 export type ErrorLogging = {
-  error?: string
-  message: string
-}
-
-export type LoggerProps = {
-  error?: string
+  error: string
 }
 
 export type MainCallback = (fnCallback: {
   ctx: {
     environment: typeof Environment.ENV
     algorithmia: typeof Algorithmia.Context
-    logger: typeof Logger.Logging
+    logger: typeof Logger.Context
     sentry: typeof Sentry.Context
   }
   application: {

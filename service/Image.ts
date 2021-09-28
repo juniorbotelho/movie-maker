@@ -12,8 +12,6 @@ const Service = () => ({
 
       const content: Type.RuleState = application.state.load()
 
-      const logger = ctx.logger({})
-
       const SearchEngineContent = async (
         item: Type.StateSentence,
         query: string
@@ -23,7 +21,12 @@ const Service = () => ({
         item.googleSearchQuery = query
       }
 
+      // Initialize
+      ctx.logger.info('[Service/Image] 🚀 Initialize image service...')
+
       try {
+        ctx.logger.info('[Service/Image] 🔵 Try to get images from google!')
+
         await Promise.all(
           content.sentences.map(async (item, index) => {
             const defaultQuery = content.searchTerm
@@ -33,15 +36,17 @@ const Service = () => ({
              * Try to add links and image queries
              * to the project's content.
              */
-            if (index == 0) SearchEngineContent(item, defaultQuery)
-            else SearchEngineContent(item, query)
+            if (index == 0) await SearchEngineContent(item, defaultQuery)
+            else await SearchEngineContent(item, query)
           })
         )
+
+        ctx.logger.success('[Service/Image] 🟢 Images from google passed!')
 
         // State
         application.state.save(content)
       } catch (error) {
-        logger.error(error)
+        ctx.logger.error('[Service/Text] 🔴 '.concat(error))
         ctx.sentry.captureException(error)
       } finally {
         transaction.finish()

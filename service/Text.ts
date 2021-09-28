@@ -27,17 +27,24 @@ const Service = () => ({
             .replace(/ {2}/g, ' '),
       })
 
+      // Initialize
+      ctx.logger.info('[Service/Text] 🚀 Initialize text service...')
+
       try {
+        ctx.logger.info('[Service/Text] 🔵 Try to get text from algorithmia.')
+
         /**
          * Responsible for returning the full wikipedia article
          * about the search term using the 'algorithmia' platform.
          */
         const article = await ctx.algorithmia
-          .algo('web/WikipediaParser/0.1.2')
+          .algo('web/WikipediaParser/0.1.2?timeout=30')
           .pipe({
             articleName: content.searchTerm,
             lang: 'en',
           })
+
+        ctx.logger.success('[Service/Text] 🟢 Text from algorithmia passed!')
 
         /**
          * After returning the text content from wikipedia,
@@ -69,29 +76,36 @@ const Service = () => ({
          */
         content.sentences = content.sentences.slice(0, content.maximumSentences)
 
-        await Promise.all(
-          content.sentences.map(async (sentence) => {
-            const { result } = await watson.analyze({
-              text: sentence.text,
-              features: {
-                keywords: {},
-              },
-            })
+        ctx.logger.info('[Service/Text] 🔵 Try to get keywords with Watson!')
 
-            /**
-             * It has the function of adding the necessary
-             * keywords to the sentence object.
-             */
-            sentence.keywords = result.keywords
-              .map((textualSentenceItem) => textualSentenceItem.text)
-              .flat()
+        /**
+         * This iteration is more dynamic than the 'map' by
+         * Promise.all, prefer to use this format for
+         * calls to remote APIs.
+         */
+        for (const sentence of content.sentences) {
+          const { result } = await watson.analyze({
+            text: sentence.text,
+            features: {
+              keywords: {},
+            },
           })
-        )
+
+          /**
+           * It has the function of adding the necessary
+           * keywords to the sentence object.
+           */
+          sentence.keywords = result.keywords
+            .map((textualSentenceItem) => textualSentenceItem.text)
+            .flat()
+        }
+
+        ctx.logger.success('[Service/Text] 🟢 Keywords from Watson passed!')
 
         // Save
         application.state.save(content)
       } catch (error) {
-        ctx.logger({}).error(error)
+        ctx.logger.error('[Service/Text] 🔴 '.concat(error))
         ctx.sentry.captureException(error)
       } finally {
         transaction.finish()

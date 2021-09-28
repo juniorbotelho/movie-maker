@@ -15,6 +15,9 @@ const Service = () => ({
         description: 'Get survey data via user input.',
       })
 
+      // Initialize
+      ctx.logger.info('[Service/Input] 🚀 Initialize input service...')
+
       try {
         /**
          * Object responsible for maintaining temporary
@@ -32,7 +35,7 @@ const Service = () => ({
          * transformed into user initial settings.
          */
         const search = await application.readline.question(
-          'Type a search term: '
+          '🔎 Type a search engine term: '
         )
 
         const selectedIndex = await toolbox.prompt.ask({
@@ -50,6 +53,7 @@ const Service = () => ({
         fnCallback()
       } catch (error) {
         toolbox.print.error(error)
+        ctx.logger.error('[Service/Text] 🔴 '.concat(error))
         ctx.sentry.captureException(error)
       } finally {
         transaction.finish()

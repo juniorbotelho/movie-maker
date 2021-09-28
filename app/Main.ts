@@ -18,7 +18,7 @@ export const Application = (fnCallback: Type.MainCallback) =>
       ctx: {
         environment: Environment.ENV,
         algorithmia: Algorithmia.Context,
-        logger: Logger.Logging,
+        logger: Logger.Context,
         sentry: Sentry.Context,
       },
       application: {

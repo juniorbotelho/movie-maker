@@ -2,7 +2,7 @@ import * as Logger from '@App/Logger'
 import * as Sentry from '@App/Sentry'
 import * as ReadLine from 'readline'
 
-const logger = Logger.Logging({})
+const logger = Logger.Context
 
 const transaction = Sentry.Context.startTransaction({
   name: 'ReadLine',
