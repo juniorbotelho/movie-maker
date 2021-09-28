@@ -52,7 +52,16 @@ const Service = () => ({
          * content of the content.json file.
          */
         content.sourceContentOriginal = article.get().content
-        content.sourceContentSanitized = Sanitize().standardMarkdown(content)
+
+        const sanitized = Sanitize().standardMarkdown(content)
+
+        content.sourceContentSanitized = sanitized
+
+        const summarized = await ctx.algorithmia
+          .algo('nlp/Summarizer/0.1.8?timeout=30')
+          .pipe(sanitized)
+
+        content.sourceSummarized = summarized.get()
 
         /**
          * Adds all sentences to the scope of

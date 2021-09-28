@@ -12,6 +12,7 @@ export type RuleState = {
   downloadedImages?: string[]
   sourceContentOriginal?: string
   sourceContentSanitized?: string
+  sourceSummarized?: string
   sentences?: StateSentence[]
 }
 
