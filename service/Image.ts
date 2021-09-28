@@ -1,3 +1,4 @@
+import * as Bluebird from 'bluebird'
 import * as Main from '@App/Main'
 import * as Type from '@Type/Global'
 
@@ -27,19 +28,54 @@ const Service = () => ({
       try {
         ctx.logger.info('[Service/Image] 🔵 Try to get images from google!')
 
-        await Promise.all(
-          content.sentences.map(async (item, index) => {
-            const defaultQuery = content.searchTerm
-            const query = content.searchTerm.concat(item.keywords[0])
+        content.downloadedImages = []
 
-            /**
-             * Try to add links and image queries
-             * to the project's content.
-             */
-            if (index == 0) await SearchEngineContent(item, defaultQuery)
-            else await SearchEngineContent(item, query)
+        application.state.save(content)
+
+        await Bluebird.map(content.sentences, async (item, index) => {
+          const defaultQuery = content.searchTerm
+          const query = content.searchTerm.concat(item.keywords[0])
+
+          /**
+           * Try to add links and image queries
+           * to the project's content.
+           */
+          if (index == 0) await SearchEngineContent(item, defaultQuery)
+          else await SearchEngineContent(item, query)
+
+          /**
+           * Here begins the logic for automated
+           * image downloading.
+           */
+          await Bluebird.map(item.images, async (imageUrl, idx) => {
+            try {
+              if (content.downloadedImages.includes(imageUrl))
+                throw new Error('The image has already been downloaded')
+
+              /**
+               * Download the image from the server via the
+               * informed URL and keep it saved in memory.
+               */
+              await application.downloader.image({
+                url: imageUrl,
+                directory: `temp/images/${index
+                  .toString()
+                  .concat('-original.png')}`,
+              })
+
+              content.downloadedImages.push(imageUrl)
+
+              ctx.logger.success(
+                `[Service/Image] [${index}][${idx}] -> Downloaded: ${imageUrl}`
+              )
+            } catch (error) {
+              ctx.logger.error(error)
+              ctx.sentry.captureException(error)
+            } finally {
+              transaction.finish()
+            }
           })
-        )
+        })
 
         ctx.logger.success('[Service/Image] 🟢 Images from google passed!')
 

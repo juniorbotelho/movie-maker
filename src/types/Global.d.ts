@@ -9,6 +9,7 @@ export type RuleState = {
   maximumSentences?: number
   searchTerm: string
   prefix: string
+  downloadedImages?: string[]
   sourceContentOriginal?: string
   sourceContentSanitized?: string
   sentences?: StateSentence[]
