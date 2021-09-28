@@ -30,8 +30,9 @@ export async function run(
            * options are available from 'service module'.
            */
           await service.input(toolbox, async () => {
-            await service.text()
-            await service.image()
+            await service.text(async () => {
+              await service.image()
+            })
           })
         })
       },

@@ -50,10 +50,11 @@ const Service = () => ({
 
         // Statefull
         application.state.save(localContent)
-        fnCallback()
+
+        await fnCallback()
       } catch (error) {
         toolbox.print.error(error)
-        ctx.logger.error('[Service/Text] 🔴 '.concat(error))
+        ctx.logger.error('[Service/Input] 🔴 '.concat(error))
         ctx.sentry.captureException(error)
       } finally {
         transaction.finish()
