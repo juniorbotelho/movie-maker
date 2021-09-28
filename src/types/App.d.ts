@@ -7,6 +7,7 @@ import * as State from '@Utilities/State'
 import * as Sentence from '@Utilities/Sentence'
 import * as Watson from '@Utilities/Watson'
 import * as Google from '@Utilities/Google'
+import * as Downloader from '@Utilities/Downloader'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -32,6 +33,7 @@ export type MainCallback = (fnCallback: {
     sentences: typeof Sentence.Context
     watson: typeof Watson.Context
     google: typeof Google.Context
+    downloader: typeof Downloader.Context
   }
   service: {
     input: typeof Input.Context.input

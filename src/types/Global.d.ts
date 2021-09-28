@@ -13,3 +13,9 @@ export type RuleState = {
   sourceContentSanitized?: string
   sentences?: StateSentence[]
 }
+
+type ImageDownloader = {
+  url: string
+  directory: string
+  name?: string
+}
