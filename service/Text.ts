@@ -57,11 +57,26 @@ const Service = () => ({
 
         content.sourceContentSanitized = sanitized
 
+        ctx.logger.info('[Service/Text] 🔵 Try to get summarize from algo.')
+
         const summarized = await ctx.algorithmia
           .algo('nlp/Summarizer/0.1.8?timeout=30')
           .pipe(sanitized)
 
+        ctx.logger.success('[Service/Text] 🟢 Summarize from algo passed!')
+
         content.sourceSummarized = summarized.get()
+
+        ctx.logger.info('[Service/Text] 🔵 Try to get lexical from lexrank.')
+
+        const lexical = await application.lexical.lexrank({
+          text: sanitized,
+          lineCount: 10,
+        })
+
+        ctx.logger.success('[Service/Text] 🟢 Lexical from lexrank passed!')
+
+        content.sourceLexical = lexical
 
         /**
          * Adds all sentences to the scope of

@@ -5,6 +5,23 @@ export type StateSentence = {
   googleSearchQuery?: string
 }
 
+type LexRankProps = {
+  text: string
+  lineCount: number
+  pageUrl?: boolean
+}
+
+type LexRankTopLines = {
+  weight: number
+  text: string
+  index: number
+}
+
+type LexRankResponse = {
+  toplines: LexRankTopLines[]
+  text: string
+}
+
 export type RuleState = {
   maximumSentences?: number
   searchTerm: string
@@ -13,6 +30,10 @@ export type RuleState = {
   sourceContentOriginal?: string
   sourceContentSanitized?: string
   sourceSummarized?: string
+  sourceLexical?: {
+    text: string
+    toplines: LexRankTopLines[]
+  }
   sentences?: StateSentence[]
 }
 

@@ -39,6 +39,7 @@
     "gluegun": "^4.6.1",
     "googleapis": "^87.0.0",
     "ibm-watson": "^6.2.1",
+    "lexrank": "^1.0.5",
     "module-alias": "2.2.2",
     "sbd": "^1.0.19"
   },

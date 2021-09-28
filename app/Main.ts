@@ -8,6 +8,7 @@ import * as Sentence from '@Utilities/Sentence'
 import * as Watson from '@Utilities/Watson'
 import * as Google from '@Utilities/Google'
 import * as Downloader from '@Utilities/Downloader'
+import * as Lexical from '@Utilities/Lexical'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -29,6 +30,7 @@ export const Application = (fnCallback: Type.MainCallback) =>
         watson: Watson.Context,
         google: Google.Context,
         downloader: Downloader.Context,
+        lexical: Lexical.Context,
       },
       service: {
         input: Input.Context.input,

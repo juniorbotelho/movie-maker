@@ -1,5 +1,5 @@
 import { config as UniversalEnvConfig } from 'dotenv'
-import { UECUtil } from '@Utilities/UEC.Util'
+import { UECUtil } from '@Utilities/Universal'
 
 const UniversalEnvUtil = new UECUtil().setLoader(UniversalEnvConfig).setOption()
 
