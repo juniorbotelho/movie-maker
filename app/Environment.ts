@@ -1,24 +1,8 @@
-import { config as UniversalEnvConfig } from 'dotenv'
-import { UECUtil } from '@Utilities/Universal'
+import * as DotEnv from 'dotenv'
 
-const UniversalEnvUtil = new UECUtil().setLoader(UniversalEnvConfig).setOption()
-
-/**
- * This creates an instance of the dotenv model used in the
- * project so the environment variables can be read.
- */
-UniversalEnvUtil.builder((config) =>
-  Object.defineProperty(config.parsed, '', {
-    enumerable: true,
-    configurable: true,
-    writable: false,
-    value: [],
-  })
-)
+DotEnv.config({ encoding: 'UTF-8' })
 
 const CPUNode = process.env
-
-const localEnv = {}
 
 /**
  * this is the local function that allows you
@@ -26,13 +10,6 @@ const localEnv = {}
  * variable methods one by one.
  */
 const ENVContext = () => ({
-  ...Object.defineProperty(localEnv, 'ctx', {
-    enumerable: false,
-    configurable: false,
-    writable: false,
-    value: {},
-  }),
-
   /**
    * Section responsible for setting all local project
    * environment variables.

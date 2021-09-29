@@ -20,11 +20,11 @@ const structureData = {
 }
 
 const Wrapper = () => ({
-  save: (rules: Type.RuleState) => {
+  save: (rules: Type.StateRules) => {
     const rulesAsJSON = JSON.stringify({ ...structureData, ...rules }, null, 2)
     return FileSystem.writeFileSync(content, rulesAsJSON)
   },
-  saveScript: (rules: Type.RuleState) => {
+  saveScript: (rules: Type.StateRules) => {
     const rulesAsJS = JSON.stringify({ ...structureData, ...rules }, null, 2)
     const script = 'var content = {value}'.replace('{value}', rulesAsJS)
     return FileSystem.writeFileSync(scripting, script)
