@@ -18,13 +18,9 @@ const Sequelize = new Database.Sequelize({
 })
 
 try {
-  Sequelize.authenticate()
-    .then(() => {
-      logger.info('[App/Data] Connection has been established successfully!')
-    })
-    .catch((error) => {
-      throw new Error(error)
-    })
+  Sequelize.authenticate().catch((error) => {
+    throw new Error(error)
+  })
 } catch (error) {
   logger.error(error)
   sentry.captureException(error)
