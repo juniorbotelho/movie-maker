@@ -41,7 +41,9 @@
     "ibm-watson": "^6.2.1",
     "lexrank": "^1.0.5",
     "module-alias": "2.2.2",
-    "sbd": "^1.0.19"
+    "sbd": "^1.0.19",
+    "sequelize": "^6.6.5",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "@sentry/types": "^6.13.2",
@@ -49,6 +51,7 @@
     "@types/bluebird": "^3.5.36",
     "@types/node": "12.7.11",
     "@types/sbd": "^1.0.2",
+    "@types/sequelize": "^4.28.10",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "dotenv": "10.0.0",

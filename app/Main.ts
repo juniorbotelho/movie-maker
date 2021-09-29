@@ -2,6 +2,7 @@ import * as Environment from '@App/Environment'
 import * as Algorithmia from '@App/Algorithmia'
 import * as Logger from '@App/Logger'
 import * as Sentry from '@App/Sentry'
+import * as Sequelize from '@App/Sequelize'
 import * as ReadLine from '@Utilities/ReadLine'
 import * as State from '@Utilities/State'
 import * as Sentence from '@Utilities/Sentence'
@@ -22,6 +23,7 @@ export const Application = (fnCallback: Type.MainCallback) =>
         algorithmia: Algorithmia.Context,
         logger: Logger.Context,
         sentry: Sentry.Context,
+        database: Sequelize.Context,
       },
       application: {
         state: State.Context,

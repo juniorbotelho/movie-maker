@@ -15,7 +15,8 @@ function successLogging({ message }: Type.InfoLogging) {
 
 const Logging = () => ({
   error: (error: string) => errorLogging({ error }),
-  info: (message: string) => infoLogging({ message }),
+  info: (message: [sql: string, timing?: number] | string) =>
+    infoLogging({ message }),
   success: (message: string) => successLogging({ message }),
 })
 

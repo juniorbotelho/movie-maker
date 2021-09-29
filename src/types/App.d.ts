@@ -2,6 +2,7 @@ import * as Environment from '@App/Environment'
 import * as Algorithmia from '@App/Algorithmia'
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
+import * as Sequelize from '@App/Sequelize'
 import * as ReadLine from '@Utilities/ReadLine'
 import * as State from '@Utilities/State'
 import * as Sentence from '@Utilities/Sentence'
@@ -14,7 +15,7 @@ import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
 
 export type InfoLogging = {
-  message: string
+  message: [sql: string, timing?: number] | string
 }
 
 export type ErrorLogging = {
@@ -27,6 +28,7 @@ export type MainCallback = (fnCallback: {
     algorithmia: typeof Algorithmia.Context
     logger: typeof Logger.Context
     sentry: typeof Sentry.Context
+    database: typeof Sequelize.Context
   }
   application: {
     state: typeof State.Context
