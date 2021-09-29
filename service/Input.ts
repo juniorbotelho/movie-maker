@@ -24,7 +24,7 @@ const Service = () => ({
          * settings for searches and terms initially
          * conditioned to Wikipedia.
          */
-        const localContent: Type.RuleState = {
+        const localContent: Type.StateRules = {
           maximumSentences: 7,
           searchTerm: '',
           prefix: '',

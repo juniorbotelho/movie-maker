@@ -11,7 +11,7 @@ const Service = () => ({
         description: 'Service to handle with google images.',
       })
 
-      const content: Type.RuleState = application.state.load()
+      const content: Type.StateRules = application.state.load()
 
       const SearchEngineContent = async (
         item: Type.StateSentence,

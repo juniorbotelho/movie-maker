@@ -10,11 +10,11 @@ const Service = () => ({
         description: 'Get survey data via algorithmia.',
       })
 
-      const content: Type.RuleState = application.state.load()
+      const content: Type.StateRules = application.state.load()
       const watson = application.watson.nlu()
 
       const Sanitize = () => ({
-        standardMarkdown: (text: Type.RuleState) =>
+        standardMarkdown: (text: Type.StateRules) =>
           text.sourceContentOriginal
             .split('\n')
             .filter((line) => {

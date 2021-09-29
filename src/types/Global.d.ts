@@ -22,7 +22,7 @@ type LexRankResponse = {
   text: string
 }
 
-export type RuleState = {
+export type StateRules = {
   maximumSentences?: number
   searchTerm: string
   prefix: string
