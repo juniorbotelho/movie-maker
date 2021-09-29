@@ -30,3 +30,4 @@
 - [X] text service and its dependencies #3
 - [X] create the service to handle image processing #4
 - [ ] add ideas for pull requests from the original project in Filipe's repo #5
+- [ ] create a cache system to store all 'content.json' in cache folders #6
