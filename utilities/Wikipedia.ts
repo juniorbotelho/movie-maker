@@ -172,6 +172,12 @@ const Wrapper = () => ({
      */
     const { suggestions } = await meta.search(wikipedia, search)
 
-    await meta.content(wikipedia, suggestions[switcher()])
+    return await meta.content(wikipedia, suggestions[switcher()])
   },
 })
+
+/**
+ * Just the keys of the encapsulated object that will serve
+ * as the basis for all wikipedia functions.
+ */
+export const Context = Wrapper()
