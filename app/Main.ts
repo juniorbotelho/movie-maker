@@ -3,8 +3,9 @@ import * as Algorithmia from '@App/Algorithmia'
 import * as Logger from '@App/Logger'
 import * as Sentry from '@App/Sentry'
 import * as Sequelize from '@App/Sequelize'
+import * as WikiParser from '@Config/WikiParser'
 import * as Wikipedia from '@Utilities/Wikipedia'
-import * as ReadLine from '@Utilities/Readline'
+import * as ReadLine from '@Utilities/ReadLine'
 import * as State from '@Utilities/State'
 import * as Sentence from '@Utilities/Sentence'
 import * as Watson from '@Utilities/Watson'
@@ -40,6 +41,9 @@ export const Application = (fnCallback: Type.MainCallback) =>
         input: Input.Context.input,
         text: Text.Context.text,
         image: Image.Context.image,
+      },
+      config: {
+        wikiParser: WikiParser.Config,
       },
     })
   })
