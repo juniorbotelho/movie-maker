@@ -18,7 +18,7 @@ const Meta = () => ({
   search: async (request: AxiosInstance, search: string) => {
     const suggestions = []
     const response: Type.WikipediaSearchResponse = {
-      searchTerm: '',
+      articleTerm: '',
       suggestions: [],
     }
 
@@ -46,7 +46,7 @@ const Meta = () => ({
         })
       })
 
-      response.searchTerm = search
+      response.articleTerm = search
       response.data = searchResponse.data
       response.suggestions = suggestions
 
