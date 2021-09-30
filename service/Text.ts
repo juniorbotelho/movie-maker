@@ -12,6 +12,10 @@ const Service = () => ({
 
       const content: Type.StateRules = application.state.load()
       const watson = application.watson.nlu()
+      const searchWith = {
+        articleTerm: content.searchTerm,
+        lang: 'en',
+      }
 
       const Sanitize = () => ({
         standardMarkdown: (text: Type.StateRules) =>
@@ -42,10 +46,7 @@ const Service = () => ({
           .is('algorithmia', async () => {
             const article = await ctx.algorithmia
               .algo('web/WikipediaParser/0.1.2?timeout=30')
-              .pipe({
-                articleName: content.searchTerm,
-                lang: 'en',
-              })
+              .pipe(searchWith)
 
             /**
              * After returning the text content from wikipedia,
@@ -56,11 +57,8 @@ const Service = () => ({
           })
           .is('wikipedia', async () => {
             const article = await ctx.wikipedia.request(
-              {
-                articleTerm: content.searchTerm,
-                lang: 'en',
-              },
-              () => {
+              searchWith,
+              (suggestions) => {
                 return 1
               }
             )
