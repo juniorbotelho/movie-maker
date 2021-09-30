@@ -22,9 +22,7 @@ export async function run(
       alias: ['s'],
       description: 'Search for the desired term by the selected engine.',
       run: (toolbox: Gluegun.GluegunToolbox) => {
-        Main.Application(async ({ ctx, service }) => {
-          ctx.logger.info('[Service/Input] 🚀 Startup from CLI command...')
-
+        Main.Application(async ({ service }) => {
           /**
            * Main services are initializing here, all this
            * options are available from 'service module'.

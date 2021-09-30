@@ -14,8 +14,8 @@ export const Config = {
   includes(config: string) {
     if (config.split('|').includes(this['wikiParser']))
       return {
-        is(condition: string, fnCallback: () => void) {
-          if (condition === Config['wikiParser']) fnCallback()
+        async is(condition: string, fnCallback: () => Promise<void>) {
+          if (condition === Config['wikiParser']) await fnCallback()
           return this
         },
       }

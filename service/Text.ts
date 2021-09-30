@@ -35,8 +35,6 @@ const Service = () => ({
       ctx.logger.info('[Service/Text] 🚀 Initialize text service...')
 
       try {
-        ctx.logger.info('[Service/Text] 🔵 Try to get text from algorithmia.')
-
         /**
          * Responsible for returning the full wikipedia article
          * about the search term using the 'algorithmia' platform.
@@ -44,6 +42,10 @@ const Service = () => ({
         config.wikiParser
           .includes('algorithmia|wikipedia')
           .is('algorithmia', async () => {
+            ctx.logger.info(
+              '[Service/Text] 🔵 Try to get text from algorithmia.'
+            )
+
             const article = await ctx.algorithmia
               .algo('web/WikipediaParser/0.1.2?timeout=30')
               .pipe(searchWith)
@@ -54,24 +56,11 @@ const Service = () => ({
              * content of the content.json file.
              */
             content.sourceContentOriginal = article.get().content
-          })
-          .is('wikipedia', async () => {
-            const article = await ctx.wikipedia.request(
-              searchWith,
-              (suggestions) => {
-                return 1
-              }
+
+            ctx.logger.success(
+              '[Service/Text] 🟢 Text from algorithmia passed!'
             )
-
-            /**
-             * After returning the text content from wikipedia,
-             * you need to save it as part of the state
-             * content of the content.json file.
-             */
-            content.sourceContentOriginal = article.content
           })
-
-        ctx.logger.success('[Service/Text] 🟢 Text from algorithmia passed!')
 
         const sanitized = Sanitize().standardMarkdown(content)
 

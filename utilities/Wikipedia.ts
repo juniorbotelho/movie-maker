@@ -172,7 +172,10 @@ const Wrapper = () => ({
      */
     const { suggestions } = await meta.search(wikipedia, search)
 
-    return await meta.content(wikipedia, suggestions[switcher(suggestions)])
+    return await meta.content(
+      wikipedia,
+      suggestions[await switcher(suggestions)]
+    )
   },
 })
 
