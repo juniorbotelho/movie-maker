@@ -3,6 +3,7 @@ import * as Algorithmia from '@App/Algorithmia'
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
 import * as Sequelize from '@App/Sequelize'
+import * as Wikipedia from '@Utilities/Wikipedia'
 import * as ReadLine from '@Utilities/ReadLine'
 import * as State from '@Utilities/State'
 import * as Sentence from '@Utilities/Sentence'
@@ -26,6 +27,7 @@ export type MainCallback = (fnCallback: {
   ctx: {
     environment: typeof Environment.ENV
     algorithmia: typeof Algorithmia.Context
+    wikipedia: typeof Wikipedia.Context
     logger: typeof Logger.Context
     sentry: typeof Sentry.Context
     database: typeof Sequelize.Context
