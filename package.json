@@ -41,6 +41,7 @@
     "ibm-watson": "^6.2.1",
     "lexrank": "^1.0.5",
     "module-alias": "2.2.2",
+    "officegen": "Ziv-Barber/officegen#master",
     "sbd": "^1.0.19",
     "sequelize": "^6.6.5",
     "sqlite3": "^5.0.2",
