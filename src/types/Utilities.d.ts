@@ -14,7 +14,9 @@ export type WikipediaResponse = {
   url: string
 }
 
-export type WikipediaSwitcher = () => number
+export type WikipediaSwitcher = (
+  suggestions: WikipediaSearchSuggestions[]
+) => number
 
 export type WikipediaSearchAxios = [string, string[], string[], string[]]
 
