@@ -1,22 +1,74 @@
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
+import * as Bluebird from 'bluebird'
 import Axios, { AxiosInstance } from 'axios'
 
 export type WikipediaRequest = {
-  search: string
+  searchTerm: string
   lang: 'en' | 'es' | 'pt' | string
 }
 
+export type WikipediaSwitcher = () => number
+
 export type WikipediaSearchAxios = [string, string[], string[], string[]]
+
+export type WikipediaSearchSuggestions = {
+  title: string
+  generic?: string
+  link: string
+}
 
 export type WikipediaSearchResponse = {
   searchTerm: string
   data?: WikipediaSearchAxios
-  suggestions: {
+  suggestions: WikipediaSearchSuggestions[]
+}
+
+export type WikipediaContentResponse = {
+  pageid: number
+  ns?: number
+  title: string
+  extract: string
+  images: {
+    ns: number
     title: string
-    generic?: string
-    link: string
   }[]
+  links: {
+    ns: number
+    title: string
+  }[]
+  contentmodel?: string
+  pagelanguage?: string
+  pagelanguagedir?: string
+  touched?: string
+  lastrevid?: number
+  length?: number
+  extlinks: {
+    '*': string
+  }[]
+}
+
+export type WikipediaImageResponse = {
+  pageid: number
+  ns?: number
+  title: string
+  imagerepository?: string
+  imageinfo: {
+    url: string
+    descriptionurl: string
+    descriptionshorturl: string
+  }[]
+}
+
+export type WikipediaResponse = {
+  pageid: number
+  links: string[]
+  references: string[]
+  content: string
+  summary: string
+  images: string[]
+  title: string
+  url: string
 }
 
 const sentry = Sentry.Context
@@ -75,10 +127,99 @@ const Meta = () => ({
       transaction.finish()
     }
   },
+  content: async (
+    request: AxiosInstance,
+    search: WikipediaSearchSuggestions
+  ) => {
+    // todo: it can break if wikipedia domain has change from https://**.wikipedia.org/
+    const route = search.link.substr(24, search.link.length)
+    const content: WikipediaResponse = {
+      pageid: 0,
+      title: '',
+      url: '',
+      links: [],
+      content: '',
+      summary: '',
+      references: [],
+      images: [],
+    }
+
+    try {
+      const { data } = await request.get(route, {
+        params: {
+          action: 'query',
+          prop: 'extracts|images|links|info|extlinks',
+          redirects: 1,
+          exsectionformat: 'wiki',
+          explaintext: true,
+          titles: search.title,
+          format: 'json',
+        },
+      })
+
+      /**
+       * It obtains the raw data received directly by the request
+       * from the official wikipedia api and transforms this
+       * request into an iterable object.
+       */
+      const wrapper = Object.entries<WikipediaContentResponse>(data.query.pages)
+      const pages = new Map(wrapper)
+
+      /**
+       * Assemble the data structure referring to the type
+       * 'WikipediaResponse' giving a structure very similar
+       * to what algorithmia already does.
+       */
+      await Bluebird.map(pages, async ([, value]) => {
+        content.pageid = value.pageid
+        content.title = value.title
+        content.url = search.link
+        content.links = value.links.map((item) => item.title)
+        content.content = value.extract
+        content.summary = value.extract.split('\n\n\n')[0]
+        content.references = value.extlinks.map((item) => item['*'])
+        content.images = await Bluebird.map(value.images, async (value) => {
+          const { data } = await request.get('/', {
+            params: {
+              action: 'query',
+              prop: 'imageinfo',
+              titles: value.title,
+              format: 'json',
+              iiprop: 'url',
+            },
+          })
+
+          const wrap = Object.entries<WikipediaImageResponse>(data.query.pages)
+          const images = new Map(wrap)
+
+          return new Promise((resolve) => {
+            images.forEach((image) =>
+              image.imageinfo.forEach((item) => resolve(item.url))
+            )
+          })
+        })
+      })
+
+      /**
+       * Returns the data structure similar to the wiki-parser
+       * algorithmia, with the difference that it is now
+       * directly accessed by the wikipedia api.
+       */
+      return content
+    } catch (error) {
+      logger.error(error)
+      sentry.captureException(error)
+    } finally {
+      transaction.finish()
+    }
+  },
 })
 
 const Wrapper = () => ({
-  request: async ({ search, lang }: WikipediaRequest) => {
+  request: async (
+    { searchTerm: search, lang }: WikipediaRequest,
+    switcher: WikipediaSwitcher
+  ) => {
     const wikipedia = Axios.create({
       baseURL: 'https://'.concat(lang).concat('.wikipedia.org/w/api.php'),
       timeout: 30000,
@@ -92,11 +233,8 @@ const Wrapper = () => ({
      * which should have some search for images
      * and contents.
      */
-    const searched = await meta.search(wikipedia, search)
-  },
-})
+    const { suggestions } = await meta.search(wikipedia, search)
 
-Wrapper().request({
-  search: 'Michael Jackson',
-  lang: 'en',
+    await meta.content(wikipedia, suggestions[switcher()])
+  },
 })
