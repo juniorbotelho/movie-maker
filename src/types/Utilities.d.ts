@@ -27,7 +27,7 @@ export type WikipediaSearchSuggestions = {
 }
 
 export type WikipediaSearchResponse = {
-  searchTerm: string
+  articleTerm: string
   data?: WikipediaSearchAxios
   suggestions: WikipediaSearchSuggestions[]
 }
