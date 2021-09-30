@@ -60,7 +60,9 @@ const Service = () => ({
                 searchTerm: content.searchTerm,
                 lang: 'en',
               },
-              () => 1
+              () => {
+                return 1
+              }
             )
 
             /**
