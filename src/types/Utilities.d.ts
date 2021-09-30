@@ -1,5 +1,5 @@
 export type WikipediaRequest = {
-  searchTerm: string
+  articleTerm: string
   lang: 'en' | 'es' | 'pt' | string
 }
 

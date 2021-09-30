@@ -154,7 +154,7 @@ const Meta = () => ({
 
 const Wrapper = () => ({
   request: async (
-    { searchTerm: search, lang }: Type.WikipediaRequest,
+    { articleTerm: search, lang }: Type.WikipediaRequest,
     switcher: Type.WikipediaSwitcher
   ) => {
     const wikipedia = Axios.create({

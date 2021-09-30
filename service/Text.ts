@@ -57,7 +57,7 @@ const Service = () => ({
           .is('wikipedia', async () => {
             const article = await ctx.wikipedia.request(
               {
-                searchTerm: content.searchTerm,
+                articleTerm: content.searchTerm,
                 lang: 'en',
               },
               () => {
