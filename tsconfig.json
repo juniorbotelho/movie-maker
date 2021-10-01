@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["esnext"],
+    "lib": ["dom", "esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "build",
@@ -16,7 +16,8 @@
       "@Service/*": ["service/*"],
       "@Temp/*": ["temp/*"],
       "@Source/*": ["src/*"],
-      "@Utilities/*": ["utilities/*"]
+      "@Utilities/*": ["utilities/*"],
+      "@Sites/*": ["www/*"]
     },
   },
   "exclude": [
