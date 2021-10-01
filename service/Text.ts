@@ -3,7 +3,7 @@ import * as Type from '@Type/Global'
 
 const Service = () => ({
   text: (fnCallback) =>
-    Main.Application(async ({ ctx, application }) => {
+    Main.Application(async ({ ctx, application, config }) => {
       const transaction = ctx.sentry.startTransaction({
         name: 'Text Service',
         op: 'Service/Text',
@@ -12,6 +12,10 @@ const Service = () => ({
 
       const content: Type.StateRules = application.state.load()
       const watson = application.watson.nlu()
+      const searchWith = {
+        articleTerm: content.searchTerm,
+        lang: 'en',
+      }
 
       const Sanitize = () => ({
         standardMarkdown: (text: Type.StateRules) =>
@@ -31,27 +35,32 @@ const Service = () => ({
       ctx.logger.info('[Service/Text] 🚀 Initialize text service...')
 
       try {
-        ctx.logger.info('[Service/Text] 🔵 Try to get text from algorithmia.')
-
         /**
          * Responsible for returning the full wikipedia article
          * about the search term using the 'algorithmia' platform.
          */
-        const article = await ctx.algorithmia
-          .algo('web/WikipediaParser/0.1.2?timeout=30')
-          .pipe({
-            articleName: content.searchTerm,
-            lang: 'en',
+        config.wikiParser
+          .includes('algorithmia|wikipedia')
+          .is('algorithmia', async () => {
+            ctx.logger.info(
+              '[Service/Text] 🔵 Try to get text from algorithmia.'
+            )
+
+            const article = await ctx.algorithmia
+              .algo('web/WikipediaParser/0.1.2?timeout=30')
+              .pipe(searchWith)
+
+            /**
+             * After returning the text content from wikipedia,
+             * you need to save it as part of the state
+             * content of the content.json file.
+             */
+            content.sourceContentOriginal = article.get().content
+
+            ctx.logger.success(
+              '[Service/Text] 🟢 Text from algorithmia passed!'
+            )
           })
-
-        ctx.logger.success('[Service/Text] 🟢 Text from algorithmia passed!')
-
-        /**
-         * After returning the text content from wikipedia,
-         * you need to save it as part of the state
-         * content of the content.json file.
-         */
-        content.sourceContentOriginal = article.get().content
 
         const sanitized = Sanitize().standardMarkdown(content)
 

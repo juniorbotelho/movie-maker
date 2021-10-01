@@ -17,15 +17,22 @@ const Sequelize = new Database.Sequelize({
   logging: (...message) => logger.info(message),
 })
 
-try {
-  Sequelize.authenticate().catch((error) => {
-    throw new Error(error)
-  })
-} catch (error) {
-  logger.error(error)
-  sentry.captureException(error)
-} finally {
-  transaction.finish()
+/**
+ * Serves to test if the connection to the database
+ * is really working, this function is not available
+ * in the context of the application.
+ */
+export const Authenticate = () => {
+  try {
+    Sequelize.authenticate().catch((error) => {
+      throw new Error(error)
+    })
+  } catch (error) {
+    logger.error(error)
+    sentry.captureException(error)
+  } finally {
+    transaction.finish()
+  }
 }
 
 /**

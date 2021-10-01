@@ -1,10 +1,11 @@
 import * as Gluegun from 'gluegun'
+import * as Bluebird from 'bluebird'
 import * as Main from '@App/Main'
 import * as Type from '@Type/Global'
 
 const Service = () => ({
-  input: (toolbox: Gluegun.GluegunToolbox, fnCallback) =>
-    Main.Application(async ({ ctx, application }) => {
+  input: async (toolbox: Gluegun.GluegunToolbox, fnCallback) =>
+    await Main.Application(async ({ ctx, application, config }) => {
       /**
        * Applies sentry support via CLI, to gather
        * information about possible errors in this context.
@@ -15,21 +16,18 @@ const Service = () => ({
         description: 'Get survey data via user input.',
       })
 
-      // Initialize
-      ctx.logger.info('[Service/Input] 🚀 Initialize input service...')
+      /**
+       * Object responsible for maintaining temporary
+       * settings for searches and terms initially
+       * conditioned to Wikipedia.
+       */
+      const localContent: Type.StateRules = {
+        maximumSentences: 7,
+        searchTerm: '',
+        prefix: '',
+      }
 
       try {
-        /**
-         * Object responsible for maintaining temporary
-         * settings for searches and terms initially
-         * conditioned to Wikipedia.
-         */
-        const localContent: Type.StateRules = {
-          maximumSentences: 7,
-          searchTerm: '',
-          prefix: '',
-        }
-
         /**
          * Prompts and inputs that will be handled and
          * transformed into user initial settings.
@@ -44,6 +42,50 @@ const Service = () => ({
           message: 'Choose one option',
           choices: ['Who is', 'What is', 'The history of'],
         })
+
+        const searchWith = {
+          articleTerm: search,
+          lang: 'en',
+        }
+
+        await config.wikiParser
+          .includes('algorithmia|wikipedia')
+          .is('wikipedia', async () => {
+            const article = await ctx.wikipedia.request(
+              searchWith,
+              async (suggestions) => {
+                const options = await toolbox.prompt.ask({
+                  type: 'select',
+                  name: 'searchTerm',
+                  message: 'Choose one search term',
+                  choices: suggestions.map((item) => item.title),
+                })
+
+                /**
+                 * Compare the requested term with the previous
+                 * terms added by the wikipedia api.
+                 */
+                const [optionSelectedIndex] = suggestions
+                  .map((item, selectedIndexSearch) => {
+                    if (item.title == options.searchTerm)
+                      return selectedIndexSearch
+                  })
+                  .join('')
+                  .split('')
+
+                return Number.parseInt(optionSelectedIndex)
+              }
+            )
+
+            /**
+             * After returning the text content from wikipedia,
+             * you need to save it as part of the state
+             * content of the content.json file.
+             */
+            localContent.sourceContentOriginal = article.content
+          })
+
+        console.log('passed', 'passed at here!')
 
         localContent.searchTerm = search
         localContent.prefix = selectedIndex.term
