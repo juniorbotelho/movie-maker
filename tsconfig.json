@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["esnext"],
+    "lib": ["dom", "esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "build",
@@ -12,11 +12,13 @@
       "@Type/*": ["src/types/*"],
       "@App/*": ["app/*"],
       "@Cli/*": ["cli/*"],
+      "@Container/*": ["container/*"],
       "@Config/*": ["config/*"],
       "@Service/*": ["service/*"],
       "@Temp/*": ["temp/*"],
       "@Source/*": ["src/*"],
-      "@Utilities/*": ["utilities/*"]
+      "@Utilities/*": ["utilities/*"],
+      "@Sites/*": ["www/*"]
     },
   },
   "exclude": [
