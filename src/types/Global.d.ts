@@ -117,8 +117,9 @@ export type WebEngineContainerContext = {
     }: LexRankProps) => Promise<LexRankResponse>
   }) => Promise<WebEngineContainerBuilder>
   nextPage: () => void
-  buildSearch: () => SiteSearchResponse
-  buildRequest: () => SiteSearchRequested
+  build: (
+    mode: 'search' | 'request'
+  ) => SiteSearchRequested | SiteSearchResponse
 }
 
 export type WebEngineContainer = () => WebEngineContainerContext
