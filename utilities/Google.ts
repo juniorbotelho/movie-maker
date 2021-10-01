@@ -9,9 +9,9 @@ import * as Environment from '@App/Environment'
  */
 Google.Context.options({
   headers: {
-    ':authority': 'www.google.com',
-    ':method': 'GET',
-    ':scheme': 'https',
+    authority: 'www.google.com',
+    method: 'GET',
+    scheme: 'https',
     accept:
       'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
     'accept-encoding': 'gzip, deflate, br',

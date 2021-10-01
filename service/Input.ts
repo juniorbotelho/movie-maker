@@ -66,11 +66,14 @@ const Service = () => ({
                  * terms added by the wikipedia api.
                  */
                 const [optionSelectedIndex] = suggestions
-                  // eslint-disable-next-line prettier/prettier
-                  .map((item, index) => item.title == options.searchTerm && index)
-                  .filter((item) => item)
+                  .map((item, selectedIndexSearch) => {
+                    if (item.title == options.searchTerm)
+                      return selectedIndexSearch
+                  })
+                  .join('')
+                  .split('')
 
-                return Number(optionSelectedIndex)
+                return Number.parseInt(optionSelectedIndex)
               }
             )
 
