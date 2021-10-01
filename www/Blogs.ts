@@ -22,7 +22,7 @@ const Site: Type.SiteModuleFunction = () => ({
           search: search,
         })
 
-        console.log(response.buildSearch())
+        console.log('searchSchema', response.build('search'))
       } catch (error) {
         ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
         ctx.sentry.captureException(error)
@@ -50,7 +50,7 @@ const Site: Type.SiteModuleFunction = () => ({
           lexical: application.lexical.lexrank,
         })
 
-        console.log(response.buildRequest())
+        console.log('requestSchema', response.build('request'))
       } catch (error) {
         ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
         ctx.sentry.captureException(error)
@@ -66,3 +66,5 @@ const Site: Type.SiteModuleFunction = () => ({
  * is an instance of the factory Site() function.
  */
 export const Context = Site()
+
+Context.search('react', 'geekhunter')

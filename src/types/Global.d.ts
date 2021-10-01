@@ -100,8 +100,9 @@ export type SiteSearchRequested = {
 
 export type WebEngineContainerBuilder = {
   nextPage: () => void
-  buildSearch: () => SiteSearchResponse
-  buildRequest: () => SiteSearchRequested
+  build: (
+    mode: 'search' | 'request'
+  ) => SiteSearchResponse | SiteSearchRequested
 }
 
 export type WebEngineContainerContext = {
