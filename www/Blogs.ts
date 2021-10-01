@@ -1,53 +1,56 @@
 import Axios from 'axios'
-import Cheerio from 'cheerio'
 import * as Main from '@App/Main'
-import * as Sanitize from 'sanitize-html'
-import * as Lexical from '@Utilities/Lexical'
+import * as Type from '@Type/Site'
 
-export type SiteRequest = {
-  engine: 'geekhunter'
-  route: string
-}
-
-const Site = () => ({
-  request: async ({ engine, route }: SiteRequest) =>
-    await Main.Application(async ({ ctx, application, config, service }) => {
+const Site: Type.SiteModuleFunction = () => ({
+  search: async (search, engine) =>
+    await Main.Application(async ({ ctx, application }) => {
       const transaction = ctx.sentry.startTransaction({
-        name: 'Blogs',
+        name: 'Blog Search',
+        op: 'Site/Blogs',
+        description: 'Provides a model to search topics in blogs.',
+      })
+
+      const blog = Axios.create({
+        baseURL: application.site.engine(engine),
+        timeout: 30000,
+      })
+
+      try {
+        const response = await application.site.search({
+          blog: blog,
+          search: search,
+        })
+
+        console.log(response.buildSearch())
+      } catch (error) {
+        ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
+        ctx.sentry.captureException(error)
+      } finally {
+        transaction.finish()
+      }
+    }),
+  request: async (route, engine) =>
+    await Main.Application(async ({ ctx, application }) => {
+      const transaction = ctx.sentry.startTransaction({
+        name: 'Blog Request',
         op: 'Site/Blogs',
         description: 'Service to provide textual content from specific blogs.',
       })
 
       const blog = Axios.create({
-        baseURL: 'blog.geekhunter.com.br', // todo: add support for this: ctx.site.engine(engine),
+        baseURL: application.site.engine(engine), // todo: add support for this: ctx.site.engine(engine),
         timeout: 30000,
       })
 
       try {
-        const { data } = await blog.get(route)
-
-        const htmlSanitized = Sanitize(data)
-
-        const html = Cheerio.load(htmlSanitized)
-
-        const title = html('h1').text()
-
-        const content = html('p').text()
-
-        const lexicalCtx = await Lexical.Context.lexrank({
-          text: content,
-          lineCount: 20,
+        const response = await application.site.request({
+          route: route,
+          blog: blog,
+          lexical: application.lexical.lexrank,
         })
 
-        /**
-         * Return a data structure where title and
-         * content were already summarized by the
-         * first summarization engine.
-         */
-        return {
-          title,
-          content: lexicalCtx,
-        }
+        console.log(response.buildRequest())
       } catch (error) {
         ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
         ctx.sentry.captureException(error)

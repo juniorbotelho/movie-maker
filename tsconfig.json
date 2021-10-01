@@ -12,6 +12,7 @@
       "@Type/*": ["src/types/*"],
       "@App/*": ["app/*"],
       "@Cli/*": ["cli/*"],
+      "@Container/*": ["container/*"],
       "@Config/*": ["config/*"],
       "@Service/*": ["service/*"],
       "@Temp/*": ["temp/*"],

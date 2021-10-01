@@ -15,6 +15,7 @@ import * as Lexical from '@Utilities/Lexical'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
+import * as WebEngine from '@Container/WebEngine'
 
 export type InfoLogging = {
   message: [sql: string, timing?: number] | string
@@ -41,6 +42,7 @@ export type MainCallback = (fnCallback: {
     google: typeof Google.Context
     downloader: typeof Downloader.Context
     lexical: typeof Lexical.Context
+    site: typeof WebEngine.Context
   }
   service: {
     input: typeof Input.Context.input

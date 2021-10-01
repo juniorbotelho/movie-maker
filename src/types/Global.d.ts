@@ -1,3 +1,5 @@
+import { AxiosInstance } from 'axios'
+
 export type StateSentence = {
   text: string
   keywords: string[]
@@ -42,3 +44,81 @@ type ImageDownloader = {
   directory: string
   name?: string
 }
+
+export type WebEngineTemplate = {
+  templateSearch: (
+    search: string,
+    blog: AxiosInstance,
+    page?: number
+  ) => Promise<SiteSearchResponse>
+
+  templateRequest: (
+    route: string,
+    blog: AxiosInstance,
+    lexical: ({
+      text,
+      lineCount,
+      pageUrl: lexicalAsPageHostingUrl,
+    }: LexRankProps) => Promise<LexRankResponse>
+  ) => Promise<{
+    title: string
+    content: LexRankResponse
+  }>
+}
+
+export type WebEngineSearchRequest = {
+  search: string
+  page?: number
+  blog: AxiosInstance
+}
+
+export type SiteRequest = {
+  engine: 'geekhunter'
+  route: string
+}
+
+export type SiteSearchPagination = {
+  next: number
+  maxPages: number
+}
+
+export type SiteSearchPosts = {
+  index: number
+  link: string
+  title: string
+}
+
+export type SiteSearchResponse = {
+  posts: SiteSearchPosts[]
+  pagination: SiteSearchPagination
+}
+
+export type SiteSearchRequested = {
+  title: string
+  content: LexRankResponse
+}
+
+export type WebEngineContainerBuilder = {
+  nextPage: () => void
+  buildSearch: () => SiteSearchResponse
+  buildRequest: () => SiteSearchRequested
+}
+
+export type WebEngineContainerContext = {
+  engine: (engine: string) => string
+  search: (ctx: WebEngineSearchRequest) => Promise<WebEngineContainerBuilder>
+  request: (ctx: {
+    route: string
+    blog: AxiosInstance
+    lexical: ({
+      text,
+      lineCount,
+      pageUrl: lexicalAsPageHostingUrl,
+    }: LexRankProps) => Promise<LexRankResponse>
+  }) => Promise<WebEngineContainerBuilder>
+  nextPage: () => void
+  buildSearch: () => SiteSearchResponse
+  buildRequest: () => SiteSearchRequested
+}
+
+export type WebEngineContainer = () => WebEngineContainerContext

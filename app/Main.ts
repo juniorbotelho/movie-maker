@@ -15,6 +15,7 @@ import * as Lexical from '@Utilities/Lexical'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
+import * as WebEngine from '@Container/WebEngine'
 import * as Type from '@Type/App'
 
 export const Application = (fnCallback: Type.MainCallback) =>
@@ -36,6 +37,7 @@ export const Application = (fnCallback: Type.MainCallback) =>
         google: Google.Context,
         downloader: Downloader.Context,
         lexical: Lexical.Context,
+        site: WebEngine.Context,
       },
       service: {
         input: Input.Context.input,
