@@ -12,6 +12,7 @@ import * as Watson from '@Utilities/Watson'
 import * as Google from '@Utilities/Google'
 import * as Downloader from '@Utilities/Downloader'
 import * as Lexical from '@Utilities/Lexical'
+import * as Gluegun from '@Utilities/Gluegun'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -37,6 +38,7 @@ export type MainCallback = (fnCallback: {
   application: {
     state: typeof State.Context
     readline: typeof ReadLine.Context
+    gluegun: typeof Gluegun.Context
     sentences: typeof Sentence.Context
     watson: typeof Watson.Context
     google: typeof Google.Context
