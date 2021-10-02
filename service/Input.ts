@@ -2,7 +2,7 @@ import * as Main from '@App/Main'
 import * as Type from '@Type/Global'
 
 const Service = () => ({
-  input: async () =>
+  input: async (fnCallback) =>
     await Main.Application(async ({ ctx, application, toolbox, config }) => {
       /**
        * Applies sentry support via CLI, to gather
@@ -95,6 +95,7 @@ const Service = () => ({
 
         // Statefull
         application.state.save(localContent)
+        await fnCallback()
       } catch (error) {
         toolbox.print.error(error)
         ctx.logger.error('[Service/Input] 🔴 '.concat(error))

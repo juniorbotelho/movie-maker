@@ -2,7 +2,7 @@ import * as Main from '@App/Main'
 import * as Type from '@Type/Global'
 
 const Service = () => ({
-  text: () =>
+  text: (fnCallback) =>
     Main.Application(async ({ ctx, application, config }) => {
       const transaction = ctx.sentry.startTransaction({
         name: 'Text Service',
@@ -137,6 +137,7 @@ const Service = () => ({
 
         // Save
         application.state.save(content)
+        await fnCallback()
       } catch (error) {
         ctx.logger.error('[Service/Text] 🔴 '.concat(error))
         ctx.sentry.captureException(error)

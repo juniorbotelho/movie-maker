@@ -1,5 +1,4 @@
 import * as Gluegun from 'gluegun'
-import * as Bluebird from 'bluebird'
 import * as Main from '@App/Main'
 import * as Type from '@Cli/types'
 
@@ -28,7 +27,11 @@ export async function run(
            * Main services are initializing here, all this
            * options are available from 'service module'.
            */
-          await Bluebird.all([service.input(), service.text(), service.image()])
+          await service.input(async () => {
+            await service.text(async () => {
+              await service.image()
+            })
+          })
         })
       },
     })
