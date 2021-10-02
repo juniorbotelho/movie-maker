@@ -34,7 +34,7 @@
 
 ## #2 Project Structure from Modules
 
-**www/Blogs.ts**: The context of this module refers to any data returned by blog templates registered in the project. The context of this module refers to any data returned by blogging templates registered in the project. In the following example we use the 'geekhunter' as a request template, note that the return is a simple list structure containing the links and titles referring to the posts found.
+**www/Blogs.ts**: The context of this module refers to any data returned by blog templates registered in the project. In the following example we use the 'geekhunter' as a request template, note that the return is a simple list structure containing the links and titles referring to the posts found.
 
 **Attention**: This is just an example, the template can be created with **Cheerio** but this example will not work as long as a template called ```geekhunter.min.template``` is not inside **temp/templates**.
 
