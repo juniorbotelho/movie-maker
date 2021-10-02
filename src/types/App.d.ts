@@ -13,6 +13,7 @@ import * as Google from '@Utilities/Google'
 import * as Downloader from '@Utilities/Downloader'
 import * as Lexical from '@Utilities/Lexical'
 import * as Gluegun from '@Utilities/Gluegun'
+import * as Prompts from '@Utilities/Prompts'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -45,7 +46,10 @@ export type MainCallback = (fnCallback: {
     lexical: typeof Lexical.Context
     site: typeof WebEngine.Context
   }
-  toolbox: typeof Gluegun.Context
+  toolbox: {
+    native: typeof Gluegun.Context
+    prompts: typeof Prompts.Context
+  }
   service: {
     input: typeof Input.Context.input
     text: typeof Text.Context.text

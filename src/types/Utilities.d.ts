@@ -16,7 +16,7 @@ export type WikipediaResponse = {
 
 export type WikipediaSwitcher = (
   suggestions: WikipediaSearchSuggestions[]
-) => Promise<number>
+) => Promise<WikipediaSearchSuggestions>
 
 export type WikipediaSearchAxios = [string, string[], string[], string[]]
 

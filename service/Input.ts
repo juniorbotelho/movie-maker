@@ -1,5 +1,6 @@
 import * as Main from '@App/Main'
 import * as Type from '@Type/Global'
+import * as UtilitieType from '@Type/Utilities'
 import * as Chalk from 'chalk'
 
 console.log(Chalk.green('🚀 Loaded: Input'))
@@ -33,23 +34,22 @@ const Service = () => ({
          * Prompts and inputs that will be handled and
          * transformed into user initial settings.
          */
-        const askSearch = {
-          type: 'input',
+        const search = await toolbox.prompts.text({
+          type: 'text',
           name: 'search',
           message: '🔎 Type a search engine term',
-        }
+        })
 
-        const askKeyword = {
-          type: 'select',
+        const prefix = await toolbox.prompts.select<string>({
+          type: 'multiselect',
           name: 'prefix',
           message: 'Choose one of available options',
-          choices: ['Who is', 'What is', 'The history of'],
-        }
-
-        const { search, prefix } = await toolbox.prompt.ask([
-          askSearch,
-          askKeyword,
-        ])
+          choices: [
+            { title: 'Who is', value: '#ff0000' },
+            { title: 'What is', value: '#00ff00' },
+            { title: 'The history of', value: '#0000ff' },
+          ],
+        })
 
         const searchWith = {
           articleTerm: search,
@@ -62,26 +62,21 @@ const Service = () => ({
             const article = await ctx.wikipedia.request(
               searchWith,
               async (suggestions) => {
-                const options = await toolbox.prompt.ask({
-                  type: 'select',
-                  name: 'searchTerm',
-                  message: 'Choose one search term',
-                  choices: suggestions.map((item) => item.title),
-                })
+                type Wiki = UtilitieType.WikipediaSearchSuggestions
 
                 /**
                  * Compare the requested term with the previous
                  * terms added by the wikipedia api.
                  */
-                const [optionSelectedIndex] = suggestions
-                  .map((item, selectedIndexSearch) => {
-                    if (item.title == options.searchTerm)
-                      return selectedIndexSearch
-                  })
-                  .join('')
-                  .split('')
-
-                return Number.parseInt(optionSelectedIndex)
+                return await toolbox.prompts.select<Wiki>({
+                  type: 'multiselect',
+                  name: 'searchTerm',
+                  message: 'Choose one search term',
+                  choices: suggestions.map((item) => ({
+                    title: item.title,
+                    value: item,
+                  })),
+                })
               }
             )
 
@@ -100,7 +95,7 @@ const Service = () => ({
         application.state.save(localContent)
         await fnCallback()
       } catch (error) {
-        toolbox.print.error(error)
+        toolbox.native.print.error(error)
         ctx.logger.error('[Service/Input] 🔴 '.concat(error))
         ctx.sentry.captureException(error)
       } finally {
