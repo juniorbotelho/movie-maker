@@ -33,7 +33,6 @@ export const Application = (fnCallback: Type.MainCallback) =>
       application: {
         state: State.Context,
         readline: ReadLine.Context,
-        gluegun: Gluegun.Context,
         sentences: Sentence.Context,
         watson: Watson.Context,
         google: Google.Context,
@@ -41,6 +40,7 @@ export const Application = (fnCallback: Type.MainCallback) =>
         lexical: Lexical.Context,
         site: WebEngine.Context,
       },
+      toolbox: Gluegun.Context,
       service: {
         input: Input.Context.input,
         text: Text.Context.text,

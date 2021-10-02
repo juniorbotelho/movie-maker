@@ -38,7 +38,6 @@ export type MainCallback = (fnCallback: {
   application: {
     state: typeof State.Context
     readline: typeof ReadLine.Context
-    gluegun: typeof Gluegun.Context
     sentences: typeof Sentence.Context
     watson: typeof Watson.Context
     google: typeof Google.Context
@@ -46,6 +45,7 @@ export type MainCallback = (fnCallback: {
     lexical: typeof Lexical.Context
     site: typeof WebEngine.Context
   }
+  toolbox: typeof Gluegun.Context
   service: {
     input: typeof Input.Context.input
     text: typeof Text.Context.text
