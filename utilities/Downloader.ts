@@ -9,7 +9,7 @@ import * as Chalk from 'chalk'
 console.log(Chalk.green('🚀 Loaded: Downloader'))
 
 const transaction = Sentry.Context.startTransaction({
-  name: 'Downloader Utils',
+  name: 'Downloader',
   op: 'Utilities/Downloader',
   description: 'Get download from specified links and images getters.',
 })
@@ -17,6 +17,22 @@ const transaction = Sentry.Context.startTransaction({
 const Wrapper = () => ({
   image: async ({ url, directory }: Type.ImageDownloader) => {
     const path = Path.resolve(directory)
+
+    const mountPath = []
+
+    /**
+     * This iteration creates the necessary folders
+     * for use if they do not exist, these folders
+     * are for the imaging service.
+     */
+    path.split('/').map((sourcePath) => {
+      if (sourcePath && !sourcePath.includes('.png')) {
+        mountPath.push('/'.concat(sourcePath))
+        if (!FileSystem.existsSync(mountPath.join('')))
+          FileSystem.mkdirSync(mountPath.join(''))
+      }
+    })
+
     const writer = FileSystem.createWriteStream(path)
 
     try {
