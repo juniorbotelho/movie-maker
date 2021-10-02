@@ -1,4 +1,5 @@
 import * as Gluegun from 'gluegun'
+import * as Bluebird from 'bluebird'
 import * as Main from '@App/Main'
 import * as Type from '@Cli/types'
 
@@ -21,17 +22,13 @@ export async function run(
       name: 'start',
       alias: ['s'],
       description: 'Search for the desired term by the selected engine.',
-      run: (toolbox: Gluegun.GluegunToolbox) => {
+      run: () => {
         Main.Application(async ({ service }) => {
           /**
            * Main services are initializing here, all this
            * options are available from 'service module'.
            */
-          await service.input(toolbox, async () => {
-            await service.text(async () => {
-              await service.image()
-            })
-          })
+          await Bluebird.all([service.input(), service.text(), service.image()])
         })
       },
     })
