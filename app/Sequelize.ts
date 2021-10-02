@@ -1,6 +1,9 @@
 import * as Database from 'sequelize'
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Sequelize'))
 
 const sentry = Sentry.Context
 const logger = Logger.Context

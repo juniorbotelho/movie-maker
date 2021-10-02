@@ -1,3 +1,7 @@
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: WikiParser'))
+
 export const Config = {
   ...Object.defineProperty({}, 'wikiParser', {
     enumerable: true,

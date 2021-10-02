@@ -1,6 +1,8 @@
 import * as Chalk from 'chalk'
 import * as Type from '@Type/App'
 
+console.log(Chalk.green('🚀 Loaded: Logger'))
+
 function infoLogging({ message }: Type.InfoLogging) {
   message && console.info(Chalk.blue(message))
 }

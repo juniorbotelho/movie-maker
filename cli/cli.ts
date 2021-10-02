@@ -1,6 +1,9 @@
 import * as Gluegun from 'gluegun'
 import * as Main from '@App/Main'
 import * as Type from '@Cli/types'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Commander'))
 
 /**
  * Create an initial gluegun command

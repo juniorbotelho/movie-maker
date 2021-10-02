@@ -18,6 +18,9 @@ import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
 import * as WebEngine from '@Container/WebEngine'
 import * as Type from '@Type/App'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Main'))
 
 export const Application = (fnCallback: Type.MainCallback) =>
   new Promise<void>(() => {

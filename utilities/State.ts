@@ -1,6 +1,9 @@
 import * as FileSystem from 'fs'
 import * as Path from 'path'
 import * as Type from '@Type/Global'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: State'))
 
 const content = Path.resolve('temp/content.json')
 

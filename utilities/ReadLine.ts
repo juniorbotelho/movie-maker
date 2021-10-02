@@ -1,6 +1,9 @@
 import * as Logger from '@App/Logger'
 import * as Sentry from '@App/Sentry'
 import * as ReadLine from 'readline'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: ReadLine'))
 
 const logger = Logger.Context
 

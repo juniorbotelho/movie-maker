@@ -2,6 +2,9 @@ import * as LexRank from 'lexrank'
 import * as Sentry from '@App/Sentry'
 import * as Logger from '@App/Logger'
 import * as Type from '@Type/Global'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Lexical'))
 
 const transaction = Sentry.Context.startTransaction({
   name: 'Lexical',

@@ -1,4 +1,7 @@
 import * as DotEnv from 'dotenv'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Environment'))
 
 DotEnv.config({ encoding: 'UTF-8' })
 

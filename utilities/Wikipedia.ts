@@ -3,6 +3,9 @@ import * as Logger from '@App/Logger'
 import * as Type from '@Type/Utilities'
 import * as Bluebird from 'bluebird'
 import Axios, { AxiosInstance } from 'axios'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Wikipedia'))
 
 const sentry = Sentry.Context
 

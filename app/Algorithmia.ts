@@ -1,4 +1,7 @@
 import * as Environment from '@App/Environment'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Algorithmia'))
 
 const Algorithmia = require('algorithmia')
 

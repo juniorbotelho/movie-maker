@@ -1,4 +1,7 @@
 import * as Type from '@Type/Global'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: WebEngine'))
 
 const searchEngines = new Map()
 

@@ -1,5 +1,8 @@
 import * as Main from '@App/Main'
 import * as Type from '@Type/Global'
+import * as Chalk from 'chalk'
+
+console.log(Chalk.green('🚀 Loaded: Text'))
 
 const Service = () => ({
   text: (fnCallback) =>
