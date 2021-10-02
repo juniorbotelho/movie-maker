@@ -60,7 +60,6 @@
     "@types/bluebird": "^3.5.36",
     "@types/node": "12.7.11",
     "@types/prompt": "^1.1.1",
-    "@types/prompts": "^2.0.14",
     "@types/sanitize-html": "^2.3.2",
     "@types/sbd": "^1.0.2",
     "@types/sequelize": "^4.28.10",
