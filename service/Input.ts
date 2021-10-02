@@ -1,5 +1,4 @@
 import * as Gluegun from 'gluegun'
-import * as Bluebird from 'bluebird'
 import * as Main from '@App/Main'
 import * as Type from '@Type/Global'
 
@@ -32,16 +31,23 @@ const Service = () => ({
          * Prompts and inputs that will be handled and
          * transformed into user initial settings.
          */
-        const search = await application.readline.question(
-          '🔎 Type a search engine term: '
-        )
+        const askSearch = {
+          type: 'input',
+          name: 'search',
+          message: '🔎 Type a search engine term',
+        }
 
-        const selectedIndex = await toolbox.prompt.ask({
+        const askKeyword = {
           type: 'select',
-          name: 'term',
-          message: 'Choose one option',
-          choices: ['Who is', 'What is', 'The history of'],
-        })
+          name: 'prefix',
+          message: 'Choose one of available options',
+          choises: ['Who is', 'What is', 'The history of'],
+        }
+
+        const { search, prefix } = await toolbox.prompt.ask([
+          askSearch,
+          askKeyword,
+        ])
 
         const searchWith = {
           articleTerm: search,
@@ -85,10 +91,8 @@ const Service = () => ({
             localContent.sourceContentOriginal = article.content
           })
 
-        console.log('passed', 'passed at here!')
-
         localContent.searchTerm = search
-        localContent.prefix = selectedIndex.term
+        localContent.prefix = prefix
 
         // Statefull
         application.state.save(localContent)
