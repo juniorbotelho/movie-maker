@@ -56,22 +56,39 @@ const Service = () => ({
         }
 
         if (['geekhunter'].includes(engine)) {
+          /**
+           * Search for the requested topic through a pre-created
+           * template and add the result of that search in link
+           * format to localContent.
+           */
           await ctx.blog.search(
             search,
             engine,
             async (response: Type.SiteSearchResponse) => {
-              const selectedOption =
-                await toolbox.prompts.select<Type.SiteSearchResponse>({
-                  type: 'multiselect',
-                  name: 'selectedOption',
-                  message: 'Choose one of available topics',
-                  choices: response.posts.map((item) => ({
-                    title: item.title,
-                    value: item.link,
-                  })),
-                })
+              localContent.customTopic = await toolbox.prompts.select<string>({
+                type: 'multiselect',
+                name: 'selectedOption',
+                message: 'Choose one of available topics',
+                choices: response.posts.map((item) => ({
+                  title: item.title,
+                  value: item.link,
+                })),
+              })
+            }
+          )
 
-              console.log('selectedOption', selectedOption)
+          /**
+           * Based on the previous search, the 'localContent' state now
+           * has the link where a request can be made to the template
+           * via the 'request' method.
+           */
+          await ctx.blog.request(
+            localContent.customTopic,
+            engine,
+            (response: Type.SiteSearchRequested) => {
+              localContent.searchTerm = response.title
+              localContent.sourceContentOriginal = response.content.text
+              localContent.sourceLexical = response.content
             }
           )
         } else {
