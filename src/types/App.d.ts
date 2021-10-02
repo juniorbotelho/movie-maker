@@ -54,4 +54,4 @@ export type MainCallback = (fnCallback: {
   config: {
     wikiParser: typeof WikiParser.Config
   }
-}) => void
+}) => Promise<void>

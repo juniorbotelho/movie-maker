@@ -22,35 +22,33 @@ import * as Chalk from 'chalk'
 
 console.log(Chalk.green('🚀 Loaded: Main'))
 
-export const Application = (fnCallback: Type.MainCallback) =>
-  new Promise<void>(() => {
-    fnCallback({
-      ctx: {
-        environment: Environment.ENV,
-        algorithmia: Algorithmia.Context,
-        wikipedia: Wikipedia.Context,
-        logger: Logger.Context,
-        sentry: Sentry.Context,
-        database: Sequelize.Context,
-      },
-      application: {
-        state: State.Context,
-        readline: ReadLine.Context,
-        sentences: Sentence.Context,
-        watson: Watson.Context,
-        google: Google.Context,
-        downloader: Downloader.Context,
-        lexical: Lexical.Context,
-        site: WebEngine.Context,
-      },
-      toolbox: Gluegun.Context,
-      service: {
-        input: Input.Context.input,
-        text: Text.Context.text,
-        image: Image.Context.image,
-      },
-      config: {
-        wikiParser: WikiParser.Config,
-      },
-    })
+export const Application = async (fnCallback: Type.MainCallback) =>
+  await fnCallback({
+    ctx: {
+      environment: Environment.ENV,
+      algorithmia: Algorithmia.Context,
+      wikipedia: Wikipedia.Context,
+      logger: Logger.Context,
+      sentry: Sentry.Context,
+      database: Sequelize.Context,
+    },
+    application: {
+      state: State.Context,
+      readline: ReadLine.Context,
+      sentences: Sentence.Context,
+      watson: Watson.Context,
+      google: Google.Context,
+      downloader: Downloader.Context,
+      lexical: Lexical.Context,
+      site: WebEngine.Context,
+    },
+    toolbox: Gluegun.Context,
+    service: {
+      input: Input.Context.input,
+      text: Text.Context.text,
+      image: Image.Context.image,
+    },
+    config: {
+      wikiParser: WikiParser.Config,
+    },
   })
