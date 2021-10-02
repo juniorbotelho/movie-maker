@@ -41,7 +41,7 @@ const Service = () => ({
           type: 'select',
           name: 'prefix',
           message: 'Choose one of available options',
-          choises: ['Who is', 'What is', 'The history of'],
+          choices: ['Who is', 'What is', 'The history of'],
         }
 
         const { search, prefix } = await toolbox.prompt.ask([
