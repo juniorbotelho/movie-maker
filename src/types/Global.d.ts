@@ -125,3 +125,11 @@ export type WebEngineContainerContext = {
 }
 
 export type WebEngineContainer = () => WebEngineContainerContext
+
+declare type RegistryContainerBody = {
+  add: (name: string, value: string) => RegistryContainerBody
+  listAll: () => string[]
+  query: (name: string) => string
+}
+
+declare type RegistryContainer = () => RegistryContainerBody
