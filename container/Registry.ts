@@ -23,7 +23,9 @@ const Container: Type.RegistryContainer = () => ({
   }),
 
   /**
-   *
+   * Load a file called 'template.json' containing the
+   * engines that will be used as a search and request
+   * template by the web-engine module.
    */
   loadFromFile(directory) {
     Main.Application(async ({ ctx, application }) => {
@@ -56,7 +58,8 @@ const Container: Type.RegistryContainer = () => ({
   },
 
   /**
-   *
+   * The addition is the engine name and the value
+   * belonging to that engine. Usually a url.
    */
   add(name, value) {
     this.registry.set(name, value)
@@ -64,7 +67,9 @@ const Container: Type.RegistryContainer = () => ({
   },
 
   /**
-   *
+   * Lists all data stored in registry memory,
+   * this listing is just the registry keys,
+   * without the key value.
    */
   listAll() {
     const registryMemory: Map<string, string> = this.registry
@@ -72,7 +77,9 @@ const Container: Type.RegistryContainer = () => ({
   },
 
   /**
-   *
+   * Queries a specific key in the mapper,
+   * the return is related to the value of
+   * the previously added key.
    */
   query(name) {
     const registryMemory: Map<string, string> = this.registry
