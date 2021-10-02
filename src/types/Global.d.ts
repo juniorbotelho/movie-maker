@@ -28,6 +28,7 @@ export type StateRules = {
   maximumSentences?: number
   searchTerm: string
   prefix: string
+  customTopic?: string
   downloadedImages?: string[]
   sourceContentOriginal?: string
   sourceContentSanitized?: string

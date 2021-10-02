@@ -22,7 +22,8 @@ const Site: Type.SiteModuleFunction = () => ({
           search: search,
         })
 
-        fnCallback(response.build('search'), response.nextPage)
+        // TODO: make this callback type in a real promise
+        await fnCallback(response.build('search'), response.nextPage)
       } catch (error) {
         ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
         ctx.sentry.captureException(error)
@@ -50,7 +51,8 @@ const Site: Type.SiteModuleFunction = () => ({
           lexical: application.lexical.lexrank,
         })
 
-        fnCallback(response.build('request'), response.nextPage)
+        // TODO: make this callback type to real promise
+        await fnCallback(response.build('request'), response.nextPage)
       } catch (error) {
         ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
         ctx.sentry.captureException(error)

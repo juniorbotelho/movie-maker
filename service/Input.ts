@@ -40,6 +40,17 @@ const Service = () => ({
           message: '🔎 Type a search term',
         })
 
+        const language = await toolbox.prompts.select<string>({
+          type: 'multiselect',
+          name: 'language',
+          message: 'Select your engine language',
+          choices: [
+            { title: 'English', value: 'en' },
+            { title: 'Portuguese', value: 'pt' },
+            { title: 'Spanish', value: 'es' },
+          ],
+        })
+
         const engine = await toolbox.prompts.select<string>({
           type: 'multiselect',
           name: 'engine',
@@ -50,62 +61,94 @@ const Service = () => ({
           ],
         })
 
-        if (['geekhunter'].includes(engine)) {
-          await ctx.blog.search(search, 'geekhunter', (response) => {
-            console.log('response', response)
-          })
-        }
-
-        const prefix = await toolbox.prompts.select<string>({
-          type: 'multiselect',
-          name: 'prefix',
-          message: 'Choose one of available options',
-          choices: [
-            { title: 'Who is', value: '#ff0000' },
-            { title: 'What is', value: '#00ff00' },
-            { title: 'The history of', value: '#0000ff' },
-          ],
-        })
-
         const searchWith = {
           articleTerm: search,
-          lang: 'en',
+          lang: language,
         }
 
-        await config.wikiParser
-          .includes('algorithmia|wikipedia')
-          .is('wikipedia', async () => {
-            const article = await ctx.wikipedia.request(
-              searchWith,
-              async (suggestions) => {
-                type Wiki = UtilitieType.WikipediaSearchSuggestions
+        if (['geekhunter'].includes(engine)) {
+          /**
+           * Search for the requested topic through a pre-created
+           * template and add the result of that search in link
+           * format to localContent.
+           */
+          await ctx.blog.search(
+            search,
+            engine,
+            async (response: Type.SiteSearchResponse) => {
+              localContent.customTopic = await toolbox.prompts.select<string>({
+                type: 'multiselect',
+                name: 'selectedOption',
+                message: 'Choose one of available topics',
+                choices: response.posts.map((item) => ({
+                  title: item.title,
+                  value: item.link,
+                })),
+              })
+            }
+          )
 
-                /**
-                 * Compare the requested term with the previous
-                 * terms added by the wikipedia api.
-                 */
-                return await toolbox.prompts.select<Wiki>({
-                  type: 'multiselect',
-                  name: 'searchTerm',
-                  message: 'Choose one search term',
-                  choices: suggestions.map((item) => ({
-                    title: item.title,
-                    value: item,
-                  })),
-                })
-              }
-            )
-
-            /**
-             * After returning the text content from wikipedia,
-             * you need to save it as part of the state
-             * content of the content.json file.
-             */
-            localContent.sourceContentOriginal = article.content
+          /**
+           * Based on the previous search, the 'localContent' state now
+           * has the link where a request can be made to the template
+           * via the 'request' method.
+           */
+          await ctx.blog.request(
+            localContent.customTopic,
+            engine,
+            (response: Type.SiteSearchRequested) => {
+              localContent.searchTerm = response.title
+              localContent.sourceContentOriginal = response.content.text
+              localContent.sourceLexical = response.content
+            }
+          )
+        } else {
+          const prefix = await toolbox.prompts.select<string>({
+            type: 'multiselect',
+            name: 'prefix',
+            message: 'Choose one of available options',
+            choices: [
+              { title: 'Who is', value: '#ff0000' },
+              { title: 'What is', value: '#00ff00' },
+              { title: 'The history of', value: '#0000ff' },
+            ],
           })
 
-        localContent.searchTerm = search
-        localContent.prefix = prefix
+          await config.wikiParser
+            .includes('algorithmia|wikipedia')
+            .is('wikipedia', async () => {
+              const article = await ctx.wikipedia.request(
+                searchWith,
+                async (suggestions) => {
+                  type Wiki = UtilitieType.WikipediaSearchSuggestions
+
+                  /**
+                   * Compare the requested term with the previous
+                   * terms added by the wikipedia api.
+                   */
+                  return await toolbox.prompts.select<Wiki>({
+                    type: 'multiselect',
+                    name: 'searchTerm',
+                    message: 'Choose one search term',
+                    choices: suggestions.map((item) => ({
+                      title: item.title,
+                      value: item,
+                    })),
+                  })
+                }
+              )
+
+              /**
+               * After returning the text content from wikipedia,
+               * you need to save it as part of the state
+               * content of the content.json file.
+               */
+              localContent.sourceContentOriginal = article.content
+            })
+
+          localContent.searchTerm = search
+          localContent.prefix = prefix
+        }
 
         // Statefull
         application.state.save(localContent)
