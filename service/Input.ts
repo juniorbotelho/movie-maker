@@ -50,62 +50,77 @@ const Service = () => ({
           ],
         })
 
-        if (['geekhunter'].includes(engine)) {
-          await ctx.blog.search(search, 'geekhunter', (response) => {
-            console.log('response', response)
-          })
-        }
-
-        const prefix = await toolbox.prompts.select<string>({
-          type: 'multiselect',
-          name: 'prefix',
-          message: 'Choose one of available options',
-          choices: [
-            { title: 'Who is', value: '#ff0000' },
-            { title: 'What is', value: '#00ff00' },
-            { title: 'The history of', value: '#0000ff' },
-          ],
-        })
-
         const searchWith = {
           articleTerm: search,
           lang: 'en',
         }
 
-        await config.wikiParser
-          .includes('algorithmia|wikipedia')
-          .is('wikipedia', async () => {
-            const article = await ctx.wikipedia.request(
-              searchWith,
-              async (suggestions) => {
-                type Wiki = UtilitieType.WikipediaSearchSuggestions
-
-                /**
-                 * Compare the requested term with the previous
-                 * terms added by the wikipedia api.
-                 */
-                return await toolbox.prompts.select<Wiki>({
+        if (['geekhunter'].includes(engine)) {
+          await ctx.blog.search(
+            search,
+            engine,
+            async (response: Type.SiteSearchResponse) => {
+              const selectedOption =
+                await toolbox.prompts.select<Type.SiteSearchResponse>({
                   type: 'multiselect',
-                  name: 'searchTerm',
-                  message: 'Choose one search term',
-                  choices: suggestions.map((item) => ({
+                  name: 'selectedOption',
+                  message: 'Choose one of available topics',
+                  choices: response.posts.map((item) => ({
                     title: item.title,
-                    value: item,
+                    value: item.link,
                   })),
                 })
-              }
-            )
 
-            /**
-             * After returning the text content from wikipedia,
-             * you need to save it as part of the state
-             * content of the content.json file.
-             */
-            localContent.sourceContentOriginal = article.content
+              console.log('selectedOption', selectedOption)
+            }
+          )
+        } else {
+          const prefix = await toolbox.prompts.select<string>({
+            type: 'multiselect',
+            name: 'prefix',
+            message: 'Choose one of available options',
+            choices: [
+              { title: 'Who is', value: '#ff0000' },
+              { title: 'What is', value: '#00ff00' },
+              { title: 'The history of', value: '#0000ff' },
+            ],
           })
 
-        localContent.searchTerm = search
-        localContent.prefix = prefix
+          await config.wikiParser
+            .includes('algorithmia|wikipedia')
+            .is('wikipedia', async () => {
+              const article = await ctx.wikipedia.request(
+                searchWith,
+                async (suggestions) => {
+                  type Wiki = UtilitieType.WikipediaSearchSuggestions
+
+                  /**
+                   * Compare the requested term with the previous
+                   * terms added by the wikipedia api.
+                   */
+                  return await toolbox.prompts.select<Wiki>({
+                    type: 'multiselect',
+                    name: 'searchTerm',
+                    message: 'Choose one search term',
+                    choices: suggestions.map((item) => ({
+                      title: item.title,
+                      value: item,
+                    })),
+                  })
+                }
+              )
+
+              /**
+               * After returning the text content from wikipedia,
+               * you need to save it as part of the state
+               * content of the content.json file.
+               */
+              localContent.sourceContentOriginal = article.content
+            })
+
+          localContent.searchTerm = search
+          localContent.prefix = prefix
+        }
 
         // Statefull
         application.state.save(localContent)
