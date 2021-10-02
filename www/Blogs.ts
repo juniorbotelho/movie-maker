@@ -3,7 +3,7 @@ import * as Main from '@App/Main'
 import * as Type from '@Type/Site'
 
 const Site: Type.SiteModuleFunction = () => ({
-  search: async (search, engine) =>
+  search: async (search, engine, fnCallback) =>
     await Main.Application(async ({ ctx, application }) => {
       const transaction = ctx.sentry.startTransaction({
         name: 'Blog Search',
@@ -22,7 +22,7 @@ const Site: Type.SiteModuleFunction = () => ({
           search: search,
         })
 
-        console.log(response.buildSearch())
+        fnCallback(response.build('search'), response.nextPage)
       } catch (error) {
         ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
         ctx.sentry.captureException(error)
@@ -30,7 +30,7 @@ const Site: Type.SiteModuleFunction = () => ({
         transaction.finish()
       }
     }),
-  request: async (route, engine) =>
+  request: async (route, engine, fnCallback) =>
     await Main.Application(async ({ ctx, application }) => {
       const transaction = ctx.sentry.startTransaction({
         name: 'Blog Request',
@@ -50,7 +50,7 @@ const Site: Type.SiteModuleFunction = () => ({
           lexical: application.lexical.lexrank,
         })
 
-        console.log(response.buildRequest())
+        fnCallback(response.build('request'), response.nextPage)
       } catch (error) {
         ctx.logger.error(`[Site/Blogs] 🔴 ${error}`)
         ctx.sentry.captureException(error)

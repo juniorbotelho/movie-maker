@@ -1,3 +1,5 @@
+import * as GlobalType from '@Type/Global'
+
 export type SiteRequest = {
   engine: 'geekhunter'
   route: string
@@ -19,7 +21,20 @@ export type SiteSearchResponse = {
   pagination: SiteSearchPagination
 }
 
+export type SiteModuleFunctionCallback = (
+  response: GlobalType.SiteSearchResponse | GlobalType.SiteSearchRequested,
+  nextPage: () => void
+) => void
+
 export type SiteModuleFunction = () => {
-  search: (search: string, engine: string) => Promise<void>
-  request: (route: string, engine: string) => Promise<void>
+  search: (
+    search: string,
+    engine: string,
+    fnCallback: SiteModuleFunctionCallback
+  ) => Promise<void>
+  request: (
+    route: string,
+    engine: string,
+    fnCallback: SiteModuleFunctionCallback
+  ) => Promise<void>
 }

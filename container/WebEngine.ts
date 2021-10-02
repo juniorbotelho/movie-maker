@@ -6,14 +6,14 @@ searchEngines.set('geekhunter', 'https://blog.geekhunter.com.br/')
 searchEngines.set('geekforgeeks', 'https://blog.geekforgeeks.com/')
 
 const Container: Type.WebEngineContainer = () => ({
-  ...Object.defineProperty({}, 'search', {
+  ...Object.defineProperty({}, 'searchSchemma', {
     enumerable: true,
     configurable: false,
     writable: true,
     value: null,
   }),
 
-  ...Object.defineProperty({}, 'requested', {
+  ...Object.defineProperty({}, 'requestSchema', {
     enumerable: true,
     configurable: false,
     writable: true,
@@ -21,6 +21,13 @@ const Container: Type.WebEngineContainer = () => ({
   }),
 
   ...Object.defineProperty({}, 'selectedEngine', {
+    enumerable: true,
+    configurable: false,
+    writable: true,
+    value: null,
+  }),
+
+  ...Object.defineProperty({}, 'mode', {
     enumerable: true,
     configurable: false,
     writable: true,
@@ -46,7 +53,8 @@ const Container: Type.WebEngineContainer = () => ({
     if (this.selectedEngine.includes('geekhunter')) {
       const template: Type.WebEngineTemplate = require(`temp/template/${this.selectedEngine}.min.template`)
       const response = await template.templateSearch(search, blog, page)
-      this.search = response
+      this.searchSchema = response
+      this.mode = 'search'
     }
 
     return this
@@ -55,7 +63,8 @@ const Container: Type.WebEngineContainer = () => ({
     if (this.selectedEngine.includes('geekhunter')) {
       const template: Type.WebEngineTemplate = require(`temp/template/${this.selectedEngine}.min.template`)
       const response = await template.templateRequest(route, blog, lexical)
-      this.requested = response
+      this.requestSchema = response
+      this.mode = 'request'
     }
 
     return this
@@ -63,11 +72,9 @@ const Container: Type.WebEngineContainer = () => ({
   nextPage() {
     console.log('nextPage', 'That function already to create!')
   },
-  buildSearch() {
-    return this.response
-  },
-  buildRequest() {
-    return this.requested
+  build(mode) {
+    if (mode.includes('search')) return this.searchSchema
+    if (mode.includes('request')) return this.requestSchema
   },
 })
 
