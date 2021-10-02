@@ -128,6 +128,7 @@ export type WebEngineContainer = () => WebEngineContainerContext
 
 declare type RegistryContainerBody = {
   add: (name: string, value: string) => RegistryContainerBody
+  loadFromFile: (directory: string) => void
   listAll: () => string[]
   query: (name: string) => string
 }
