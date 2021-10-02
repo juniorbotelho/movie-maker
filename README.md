@@ -34,6 +34,42 @@
 
 ## #2 Getting Started
 
+### 🔑 Credentials
+
+- Sentry: https://sentry.io/
+- Algorithmia: https://algorithmia.com/
+- Watson NLU: https://cloud.ibm.com/catalog/services/natural-language-understanding
+- Google API: https://console.cloud.google.com/apis/credentials
+- Google Search: https://programmablesearchengine.google.com/controlpanel/all
+
+### 📩 Environment
+
+Add the credentials of the services used to the ```.env``` file, the content is similar to the one present in the ```.env.example``` file.
+
+```shell
+# Add sentry credentials to use dashboard from sentry and capture exceptions
+# Add algorithmia support to use all deep learning from algorithmia
+DSN_CONNECT=""
+ALGO_APIKEY=""
+
+# Add credentials to use IBM cloud features and watson IA
+IBM_APIKEY=""
+IBM_IAM_APIKEY_DESCRIPTION=""
+IBM_IAM_APIKEY_NAME=""
+IBM_IAM_ROLE_CRN=""
+IBM_IAM_SERVICEID_CRN=""
+IBM_URL=""
+
+# Add url from unique feature to use with watson
+IBM_NLU_URL=""
+
+# Add credentials from google cloud to use all freemium services
+GOOGLE_API_KEY=""
+GOOGLE_SEARCH_ENGINE_ID=""
+```
+
+### 📦 Installation
+
 Using in developer mode is very simple **(see: package.json)**:
 
 ```shell
