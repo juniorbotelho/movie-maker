@@ -32,7 +32,16 @@
 - [ ] add ideas for pull requests from the original project in Filipe's repo #5
 - [ ] create a cache system to store all 'content.json' in cache folders #6
 
-## #2 Project Structure from Modules
+## #2 Getting Started
+
+Using in developer mode is very simple **(see: package.json)**:
+
+```shell
+yarn && yarn install
+yarn dev:cli
+```
+
+## #3 Project Structure from Modules
 
 **www/Blogs.ts**: The context of this module refers to any data returned by blog templates registered in the project. In the following example we use the 'geekhunter' as a request template, note that the return is a simple list structure containing the links and titles referring to the posts found.
 
