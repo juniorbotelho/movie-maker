@@ -40,6 +40,17 @@ const Service = () => ({
           message: '🔎 Type a search term',
         })
 
+        const language = await toolbox.prompts.select<string>({
+          type: 'multiselect',
+          name: 'language',
+          message: 'Select your engine language',
+          choices: [
+            { title: 'English', value: 'en' },
+            { title: 'Portuguese', value: 'pt' },
+            { title: 'Spanish', value: 'es' },
+          ],
+        })
+
         const engine = await toolbox.prompts.select<string>({
           type: 'multiselect',
           name: 'engine',
@@ -52,7 +63,7 @@ const Service = () => ({
 
         const searchWith = {
           articleTerm: search,
-          lang: 'en',
+          lang: language,
         }
 
         if (['geekhunter'].includes(engine)) {
