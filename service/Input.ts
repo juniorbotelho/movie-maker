@@ -29,6 +29,8 @@ const Service = () => ({
         prefix: '',
       }
 
+      application.registry.loadFromFile('temp')
+
       try {
         /**
          * Prompts and inputs that will be handled and
@@ -57,7 +59,11 @@ const Service = () => ({
           message: 'Choose one of available engines',
           choices: [
             { title: 'Wikipedia', value: 'wikipedia' },
-            { title: 'Geekhunter', value: 'geekhunter' },
+            { title: 'Algorithmia', value: 'algorithmia' },
+            ...application.registry.listAll().map((item) => ({
+              title: item.charAt(0).toUpperCase().concat(item.slice(1)),
+              value: item,
+            })),
           ],
         })
 
@@ -66,7 +72,7 @@ const Service = () => ({
           lang: language,
         }
 
-        if (['geekhunter'].includes(engine)) {
+        if (application.registry.listAll().includes(engine)) {
           /**
            * Search for the requested topic through a pre-created
            * template and add the result of that search in link

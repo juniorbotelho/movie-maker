@@ -14,7 +14,9 @@ const Service = () => ({
       })
 
       const content: Type.StateRules = application.state.load()
+
       const watson = application.watson.nlu()
+
       const searchWith = {
         articleTerm: content.searchTerm,
         lang: 'en',

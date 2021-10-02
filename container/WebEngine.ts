@@ -1,12 +1,8 @@
 import * as Type from '@Type/Global'
+import * as Registry from '@Container/Registry'
 import * as Chalk from 'chalk'
 
 console.log(Chalk.green('🚀 Loaded: WebEngine'))
-
-const searchEngines = new Map()
-
-searchEngines.set('geekhunter', 'https://blog.geekhunter.com.br/')
-searchEngines.set('geekforgeeks', 'https://blog.geekforgeeks.com/')
 
 const Container: Type.WebEngineContainer = () => ({
   ...Object.defineProperty({}, 'searchSchemma', {
@@ -44,7 +40,7 @@ const Container: Type.WebEngineContainer = () => ({
    */
   engine(engine) {
     this.selectedEngine = engine
-    return searchEngines.get(engine)
+    return Registry.Context.query(engine)
   },
 
   /**
