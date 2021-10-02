@@ -109,4 +109,4 @@ dist
 
 # Personal
 /temp/*[!.gif]
-/__test__
+/__test*__
