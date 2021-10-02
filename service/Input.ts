@@ -3,7 +3,7 @@ import * as Type from '@Type/Global'
 
 const Service = () => ({
   input: async () =>
-    await Main.Application(async ({ ctx, application, config }) => {
+    await Main.Application(async ({ ctx, application, toolbox, config }) => {
       /**
        * Applies sentry support via CLI, to gather
        * information about possible errors in this context.

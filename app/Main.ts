@@ -12,6 +12,7 @@ import * as Watson from '@Utilities/Watson'
 import * as Google from '@Utilities/Google'
 import * as Downloader from '@Utilities/Downloader'
 import * as Lexical from '@Utilities/Lexical'
+import * as Gluegun from '@Utilities/Gluegun'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -39,6 +40,7 @@ export const Application = (fnCallback: Type.MainCallback) =>
         lexical: Lexical.Context,
         site: WebEngine.Context,
       },
+      toolbox: Gluegun.Context,
       service: {
         input: Input.Context.input,
         text: Text.Context.text,
