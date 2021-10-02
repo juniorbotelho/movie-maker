@@ -18,6 +18,7 @@ import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
 import * as WebEngine from '@Container/WebEngine'
+import * as Registry from '@Container/Registry'
 import * as Blog from '@Sites/Blogs'
 import * as Type from '@Type/App'
 import * as Chalk from 'chalk'
@@ -44,6 +45,7 @@ export const Application = async (fnCallback: Type.MainCallback) =>
       downloader: Downloader.Context,
       lexical: Lexical.Context,
       site: WebEngine.Context,
+      registry: Registry.Context,
     },
     toolbox: {
       native: Gluegun.Context,

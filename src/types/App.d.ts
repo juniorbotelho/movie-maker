@@ -18,6 +18,7 @@ import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
 import * as WebEngine from '@Container/WebEngine'
+import * as Registry from '@Container/Registry'
 import * as Blog from '@Sites/Blogs'
 
 export type InfoLogging = {
@@ -47,6 +48,7 @@ export type MainCallback = (fnCallback: {
     downloader: typeof Downloader.Context
     lexical: typeof Lexical.Context
     site: typeof WebEngine.Context
+    registry: typeof Registry.Context
   }
   toolbox: {
     native: typeof Gluegun.Context
