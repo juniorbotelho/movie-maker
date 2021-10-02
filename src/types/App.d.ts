@@ -18,6 +18,7 @@ import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
 import * as WebEngine from '@Container/WebEngine'
+import * as Blog from '@Sites/Blogs'
 
 export type InfoLogging = {
   message: [sql: string, timing?: number] | string
@@ -35,6 +36,7 @@ export type MainCallback = (fnCallback: {
     logger: typeof Logger.Context
     sentry: typeof Sentry.Context
     database: typeof Sequelize.Context
+    blog: typeof Blog.Context
   }
   application: {
     state: typeof State.Context

@@ -37,8 +37,24 @@ const Service = () => ({
         const search = await toolbox.prompts.text({
           type: 'text',
           name: 'search',
-          message: '🔎 Type a search engine term',
+          message: '🔎 Type a search term',
         })
+
+        const engine = await toolbox.prompts.select<string>({
+          type: 'multiselect',
+          name: 'engine',
+          message: 'Choose one of available engines',
+          choices: [
+            { title: 'Wikipedia', value: 'wikipedia' },
+            { title: 'Geekhunter', value: 'geekhunter' },
+          ],
+        })
+
+        if (['geekhunter'].includes(engine)) {
+          await ctx.blog.search(search, 'geekhunter', (response) => {
+            console.log('response', response)
+          })
+        }
 
         const prefix = await toolbox.prompts.select<string>({
           type: 'multiselect',

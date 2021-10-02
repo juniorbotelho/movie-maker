@@ -18,6 +18,7 @@ import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
 import * as WebEngine from '@Container/WebEngine'
+import * as Blog from '@Sites/Blogs'
 import * as Type from '@Type/App'
 import * as Chalk from 'chalk'
 
@@ -32,6 +33,7 @@ export const Application = async (fnCallback: Type.MainCallback) =>
       logger: Logger.Context,
       sentry: Sentry.Context,
       database: Sequelize.Context,
+      blog: Blog.Context,
     },
     application: {
       state: State.Context,
