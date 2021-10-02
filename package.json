@@ -14,11 +14,14 @@
     "@Type": "build/src/types",
     "@App": "build/app",
     "@Cli": "build/cli",
+    "@Container": "build/container",
     "@Config": "build/config",
+    "@Database": "build/database",
     "@Service": "build/service",
     "@Temp": "build/temp",
     "@Source": "build/src",
-    "@Utilities": "build/utilities"
+    "@Utilities": "build/utilities",
+    "@Sites": "build/www"
   },
   "scripts": {
     "start:server": "node --require module-alias/register build/src/index.js",
@@ -27,7 +30,8 @@
     "dev:typescript": "nodemon --watch '**/*' --require tsconfig-paths/register --config",
     "dev:cli": "node --require tsconfig-paths/register cli/bin/cli",
     "prebuild": "rimraf build/*",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "cp -r temp ./build"
   },
   "license": "MIT",
   "dependencies": {
