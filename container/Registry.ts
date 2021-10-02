@@ -27,8 +27,8 @@ const Container: Type.RegistryContainer = () => ({
    * engines that will be used as a search and request
    * template by the web-engine module.
    */
-  loadFromFile(directory) {
-    Main.Application(async ({ ctx, application }) => {
+  async loadFromFile(directory) {
+    await Main.Application(async ({ ctx, application }) => {
       const transaction = ctx.sentry.startTransaction({
         name: 'Registry',
         op: 'Container/Registry',
