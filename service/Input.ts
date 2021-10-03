@@ -61,6 +61,10 @@ const Service = () => ({
           ],
         })
 
+        /**
+         * Just ask for language if selected engine
+         * is wikipedia or algorithmia.
+         */
         if (engine.includes('wikipedia') || engine.includes('algorithmia')) {
           searchWith.lang = await toolbox.prompts.select<string>({
             type: 'multiselect',
