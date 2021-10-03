@@ -37,7 +37,7 @@ const Service = () => ({
 
         await Bluebird.map(content.sentences, async (item, index) => {
           const defaultQuery = content.searchTerm
-          const query = content.searchTerm.concat(item.keywords[0])
+          const query = content.searchTerm.concat(' ').concat(item.keywords[0])
 
           /**
            * Try to add links and image queries
@@ -69,7 +69,7 @@ const Service = () => ({
               content.downloadedImages.push(imageUrl)
 
               ctx.logger.success(
-                `[Service/Image] [${index}][${idx}] -> Downloaded: ${imageUrl}`
+                `[Service/Image] 📦 -> Downloaded: ${imageUrl}`
               )
             } catch (error) {
               ctx.logger.error(error)

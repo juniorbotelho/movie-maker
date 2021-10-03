@@ -42,16 +42,10 @@ const Service = () => ({
           message: '🔎 Type a search term',
         })
 
-        const language = await toolbox.prompts.select<string>({
-          type: 'multiselect',
-          name: 'language',
-          message: 'Select your engine language',
-          choices: [
-            { title: 'English', value: 'en' },
-            { title: 'Portuguese', value: 'pt' },
-            { title: 'Spanish', value: 'es' },
-          ],
-        })
+        const searchWith = {
+          articleTerm: search,
+          lang: 'en',
+        }
 
         const engine = await toolbox.prompts.select<string>({
           type: 'multiselect',
@@ -67,9 +61,21 @@ const Service = () => ({
           ],
         })
 
-        const searchWith = {
-          articleTerm: search,
-          lang: language,
+        /**
+         * Just ask for language if selected engine
+         * is wikipedia or algorithmia.
+         */
+        if (engine.includes('wikipedia') || engine.includes('algorithmia')) {
+          searchWith.lang = await toolbox.prompts.select<string>({
+            type: 'multiselect',
+            name: 'language',
+            message: 'Select your engine language',
+            choices: [
+              { title: 'English', value: 'en' },
+              { title: 'Portuguese', value: 'pt' },
+              { title: 'Spanish', value: 'es' },
+            ],
+          })
         }
 
         if (application.registry.listAll().includes(engine)) {
