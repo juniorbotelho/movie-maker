@@ -71,15 +71,17 @@ const Service = () => ({
 
         content.sourceContentSanitized = sanitized
 
-        ctx.logger.info('[Service/Text] 🔵 Try to get summarize from algo.')
+        const workaroundToDisableThis = false
 
-        const summarized = await ctx.algorithmia
-          .algo('nlp/Summarizer/0.1.8?timeout=30')
-          .pipe(sanitized)
-
-        ctx.logger.success('[Service/Text] 🟢 Summarize from algo passed!')
-
-        content.sourceSummarized = summarized.get()
+        // TODO: add a function to use choice if algorithmia summarize will be used
+        if (workaroundToDisableThis) {
+          ctx.logger.info('[Service/Text] 🔵 Try to get summarize from algo.')
+          const summarized = await ctx.algorithmia
+            .algo('nlp/Summarizer/0.1.8?timeout=30')
+            .pipe(sanitized)
+          ctx.logger.success('[Service/Text] 🟢 Summarize from algo passed!')
+          content.sourceSummarized = summarized.get()
+        }
 
         ctx.logger.info('[Service/Text] 🔵 Try to get lexical from lexrank.')
 
