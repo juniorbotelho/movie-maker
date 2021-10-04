@@ -34,6 +34,7 @@ const ENVContext = () => ({
     url: CPUNode['IBM_URL'],
     features: {
       IBM_NLU_URL: CPUNode['IBM_NLU_URL'],
+      IBM_LTD_URL: CPUNode['IBM_LTD_URL'],
     },
   }),
 
