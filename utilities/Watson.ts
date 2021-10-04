@@ -2,20 +2,20 @@ import * as Watson from '@App/Watson'
 import * as Environment from '@App/Environment'
 
 import * as NLU from 'ibm-watson/natural-language-understanding/v1'
-import * as PLI from 'ibm-watson/personality-insights/v3'
+import * as LTD from 'ibm-watson/language-translator/v3'
 
 const Wrapper = () => ({
   nlu: () =>
     new NLU({
-      authenticator: Watson.Context,
+      authenticator: Watson.Context.nluAuth,
       version: '2019-07-12',
-      serviceUrl: Environment.ENV.Watson().features['IBM_NLU_URL'],
+      serviceUrl: Environment.ENV.Watson().nlu['url'],
     }),
-  pli: () =>
-    new PLI({
-      authenticator: Watson.Context,
-      version: '2016-10-19',
-      serviceUrl: '',
+  ltd: () =>
+    new LTD({
+      authenticator: Watson.Context.ldtAuth,
+      version: '2018-05-01',
+      serviceUrl: Environment.ENV.Watson().ltd['url'],
     }),
 })
 
