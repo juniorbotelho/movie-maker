@@ -67,10 +67,6 @@ const Service = () => ({
               })
 
               content.downloadedImages.push(imageUrl)
-
-              ctx.logger.success(
-                `[Service/Image] 📦 -> Downloaded: ${imageUrl}`
-              )
             } catch (error) {
               ctx.logger.error(error)
               ctx.sentry.captureException(error)

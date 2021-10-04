@@ -67,10 +67,13 @@ const Service = () => ({
             )
           })
 
+        /**
+         * Block responsible for sanitizing the text and removing
+         * all invalid characters, this block is important so that
+         * there are no breaks in words and/or lexical text.
+         */
         const sanitized = Sanitize().standardMarkdown(content)
-
         content.sourceContentSanitized = sanitized
-
         const workaroundToDisableThis = false
 
         // TODO: add a function to use choice if algorithmia summarize will be used
@@ -83,16 +86,20 @@ const Service = () => ({
           content.sourceSummarized = summarized.get()
         }
 
-        ctx.logger.info('[Service/Text] 🔵 Try to get lexical from lexrank.')
-
-        const lexical = await application.lexical.lexrank({
-          text: sanitized,
-          lineCount: 10,
-        })
-
-        ctx.logger.success('[Service/Text] 🟢 Lexical from lexrank passed!')
-
-        content.sourceLexical = lexical
+        /**
+         * Checks for pre-generated lexical content, if not,
+         * new lexical content is generated and added to
+         * the content object.
+         */
+        if (!content.sourceLexical) {
+          ctx.logger.info('[Service/Text] 🔵 Try to get lexical from lexrank.')
+          const lexical = await application.lexical.lexrank({
+            text: sanitized,
+            lineCount: 10,
+          })
+          ctx.logger.success('[Service/Text] 🟢 Lexical from lexrank passed!')
+          content.sourceLexical = lexical
+        }
 
         /**
          * Adds all sentences to the scope of
