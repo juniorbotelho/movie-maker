@@ -14,6 +14,7 @@ import * as Downloader from '@Utilities/Downloader'
 import * as Lexical from '@Utilities/Lexical'
 import * as Gluegun from '@Utilities/Gluegun'
 import * as Prompts from '@Utilities/Prompts'
+import * as RapidAPI from '@Utilities/RapidApi'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -43,6 +44,7 @@ export type MainCallback = (fnCallback: {
     state: typeof State.Context
     readline: typeof ReadLine.Context
     sentences: typeof Sentence.Context
+    rapidapi: typeof RapidAPI.Context
     watson: typeof Watson.Context
     google: typeof Google.Context
     downloader: typeof Downloader.Context
