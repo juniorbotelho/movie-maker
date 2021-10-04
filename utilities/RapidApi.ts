@@ -6,12 +6,21 @@ type RapidRewriterMethodResponse = {
   similarity: number
 }
 
+type RapidSummarizationMethodResponse = {
+  summary: string
+}
+
 type RapidAPIModuleFunction = () => {
   rewriter: (data: {
     language: string
     strength: 1 | 2 | 3
     text: string
   }) => Promise<RapidRewriterMethodResponse>
+
+  summarization: (data: {
+    text: string
+    num_sentences: number
+  }) => Promise<RapidSummarizationMethodResponse>
 }
 
 const Wrapper: RapidAPIModuleFunction = () => ({
@@ -27,6 +36,21 @@ const Wrapper: RapidAPIModuleFunction = () => ({
     })
 
     const response = await api.post<RapidRewriterMethodResponse>('/', data)
+
+    return response.data
+  },
+  summarization: async (data) => {
+    const api = Axios.create({
+      baseURL: Environment.ENV.RapidApi().summarization.url,
+      timeout: 30000,
+      headers: {
+        'content-type': 'application/json',
+        'x-rapidapi-host': Environment.ENV.RapidApi().summarization.host,
+        'x-rapidapi-key': Environment.ENV.RapidApi().apiKey,
+      },
+    })
+
+    const response = await api.post<RapidSummarizationMethodResponse>('/', data)
 
     return response.data
   },
