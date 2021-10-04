@@ -36,6 +36,18 @@ const ENVContext = () => ({
     },
   }),
 
+  RapidApi: () => ({
+    apiKey: CPUNode['RAPID_APIKEY'],
+    rewriter: {
+      url: CPUNode['RAPID_REWRITER_URL'],
+      host: CPUNode['RAPID_REWRITER_HOST'],
+    },
+    summarization: {
+      url: CPUNode['RAPID_SUMMARIZATION_URL'],
+      host: CPUNode['RAPID_SUMMARIZATION_HOST'],
+    },
+  }),
+
   Google: () => ({
     apiKey: CPUNode['GOOGLE_API_KEY'],
     searchEngineId: CPUNode['GOOGLE_SEARCH_ENGINE_ID'],
