@@ -4,8 +4,13 @@ import * as Chalk from 'chalk'
 
 console.log(Chalk.green('🚀 Loaded: Watson'))
 
-const Watson = new Authenticator.IamAuthenticator({
-  apikey: Environment.ENV.Watson().apikey,
+const Wrapper = () => ({
+  nluAuth: new Authenticator.IamAuthenticator({
+    apikey: Environment.ENV.Watson().nlu.apikey,
+  }),
+  ldtAuth: new Authenticator.IamAuthenticator({
+    apikey: Environment.ENV.Watson().ltd.apikey,
+  }),
 })
 
-export const Context = Watson
+export const Context = Wrapper()

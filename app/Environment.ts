@@ -26,14 +26,13 @@ const ENVContext = () => ({
   }),
 
   Watson: () => ({
-    apikey: CPUNode['IBM_APIKEY'],
-    iam_apikey_description: CPUNode['IBM_IAM_APIKEY_DESCRIPTION'],
-    iam_apikey_name: CPUNode['IBM_IAM_APIKEY_NAME'],
-    iam_role_crn: CPUNode['IBM_IAM_ROLE_CRN'],
-    iam_serviceid_crn: CPUNode['IBM_IAM_SERVICEID_CRN'],
-    url: CPUNode['IBM_URL'],
-    features: {
-      IBM_NLU_URL: CPUNode['IBM_NLU_URL'],
+    nlu: {
+      apikey: CPUNode['IBM_NLU_APIKEY'],
+      url: CPUNode['IBM_NLU_URL'],
+    },
+    ltd: {
+      apikey: CPUNode['IBM_LTD_APIKEY'],
+      url: CPUNode['IBM_LTD_URL'],
     },
   }),
 
