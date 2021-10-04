@@ -14,6 +14,7 @@ import * as Downloader from '@Utilities/Downloader'
 import * as Lexical from '@Utilities/Lexical'
 import * as Gluegun from '@Utilities/Gluegun'
 import * as Prompts from '@Utilities/Prompts'
+import * as RapidAPI from '@Utilities/RapidApi'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -40,6 +41,7 @@ export const Application = async (fnCallback: Type.MainCallback) =>
       state: State.Context,
       readline: ReadLine.Context,
       sentences: Sentence.Context,
+      rapidapi: RapidAPI.Context,
       watson: Watson.Context,
       google: Google.Context,
       downloader: Downloader.Context,
