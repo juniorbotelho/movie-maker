@@ -50,7 +50,7 @@ const Service = () => ({
            * Here begins the logic for automated
            * image downloading.
            */
-          await Bluebird.map(item.images, async (imageUrl, idx) => {
+          await Bluebird.map(item.images, async (imageUrl) => {
             try {
               if (content.downloadedImages.includes(imageUrl))
                 throw new Error('The image has already been downloaded')
