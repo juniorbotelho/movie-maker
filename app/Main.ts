@@ -15,6 +15,7 @@ import * as Lexical from '@Utilities/Lexical'
 import * as Gluegun from '@Utilities/Gluegun'
 import * as Prompts from '@Utilities/Prompts'
 import * as RapidAPI from '@Utilities/RapidApi'
+import * as Powerpoint from '@Utilities/PowerPoint'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
@@ -48,6 +49,7 @@ export const Application = async (fnCallback: Type.MainCallback) =>
       lexical: Lexical.Context,
       site: WebEngine.Context,
       registry: Registry.Context,
+      powerpoint: Powerpoint.Context,
     },
     toolbox: {
       native: Gluegun.Context,
