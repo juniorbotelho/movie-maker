@@ -21,7 +21,9 @@ const Service = () => ({
         query: string
       ) => {
         const image = await application.google.searchEngine(query)
+
         item.images = image.data.items.map((item) => item.link)
+
         item.googleSearchQuery = query
       }
 
