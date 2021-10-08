@@ -1,5 +1,9 @@
-import Powerpoint from 'pptxgenjs'
+import PptxGenJS from 'pptxgenjs'
 
-const Wrapper = () => new Powerpoint()
+const Powerpoint = require('pptxgenjs')
+
+type PowerPointModuleFunction = () => PptxGenJS
+
+const Wrapper: PowerPointModuleFunction = () => new Powerpoint()
 
 export const Context = Wrapper()
