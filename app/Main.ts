@@ -4,6 +4,7 @@ import * as Logger from '@App/Logger'
 import * as Sentry from '@App/Sentry'
 import * as Sequelize from '@App/Sequelize'
 import * as WikiParser from '@Config/WikiParser'
+import * as PowerPointTemplate from '@Config/PowerPointTemplate'
 import * as Wikipedia from '@Utilities/Wikipedia'
 import * as ReadLine from '@Utilities/ReadLine'
 import * as State from '@Utilities/State'
@@ -62,5 +63,6 @@ export const Application = async (fnCallback: Type.MainCallback) =>
     },
     config: {
       wikiParser: WikiParser.Config,
+      powerPointTemplate: PowerPointTemplate.Config,
     },
   })
