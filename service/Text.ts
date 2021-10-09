@@ -17,6 +17,8 @@ const Service = () => ({
 
       const watson = application.watson.nlu()
 
+      const translator = application.watson.ltd()
+
       const searchWith = {
         articleTerm: content.searchTerm,
         lang: 'en',
@@ -111,6 +113,7 @@ const Service = () => ({
           .forEach((sentence) => {
             content.sentences.push({
               text: sentence,
+              translated: [],
               keywords: [],
               images: [],
             })
@@ -131,7 +134,15 @@ const Service = () => ({
          * calls to remote APIs.
          */
         for (const sentence of content.sentences) {
-          const { result } = await watson.analyze({
+          // Translator
+          const translated = await translator.translate({
+            text: [sentence.text],
+            source: 'pt',
+            target: 'en',
+          })
+
+          // Keywords
+          const analyzed = await watson.analyze({
             text: sentence.text,
             features: {
               keywords: {},
@@ -139,10 +150,17 @@ const Service = () => ({
           })
 
           /**
+           *
+           */
+          sentence.translated = translated.result.translations
+            .map((item) => item.translation)
+            .flat()
+
+          /**
            * It has the function of adding the necessary
            * keywords to the sentence object.
            */
-          sentence.keywords = result.keywords
+          sentence.keywords = analyzed.result.keywords
             .map((textualSentenceItem) => textualSentenceItem.text)
             .flat()
         }
