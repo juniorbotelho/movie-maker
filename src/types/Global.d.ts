@@ -2,8 +2,11 @@ import { AxiosInstance } from 'axios'
 
 export type StateSentence = {
   text: string
+  translated: string[]
+  rewriter?: string
   keywords: string[]
   images: string[]
+  result: string[]
   googleSearchQuery?: string
 }
 

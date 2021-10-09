@@ -17,6 +17,8 @@ const Service = () => ({
 
       const watson = application.watson.nlu()
 
+      const translator = application.watson.ltd()
+
       const searchWith = {
         articleTerm: content.searchTerm,
         lang: 'en',
@@ -111,8 +113,10 @@ const Service = () => ({
           .forEach((sentence) => {
             content.sentences.push({
               text: sentence,
+              translated: [],
               keywords: [],
               images: [],
+              result: [],
             })
           })
 
@@ -123,31 +127,106 @@ const Service = () => ({
          */
         content.sentences = content.sentences.slice(0, content.maximumSentences)
 
-        ctx.logger.info('[Service/Text] 🔵 Try to get keywords with Watson!')
-
         /**
          * This iteration is more dynamic than the 'map' by
          * Promise.all, prefer to use this format for
          * calls to remote APIs.
          */
         for (const sentence of content.sentences) {
-          const { result } = await watson.analyze({
+          /**
+           * It connects to the IBM translation service and
+           * translates each sentence into the English language
+           * so that the following procedures can be completed
+           * successfully.
+           */
+          ctx.logger.success('[Service/Text] 🔵 Try to get translated text!')
+          const translated = await translator.translate({
+            text: [sentence.text],
+            source: 'pt',
+            target: 'en',
+          })
+          ctx.logger.success('[Service/Text] 🟢 Translator has passed!')
+
+          /**
+           * Connects to rapidapi's summarize service and create new
+           * lexical summaries for each sentence, but this time
+           * these summaries are based on the result of the previous
+           * service.
+           */
+          ctx.logger.success('[Service/Text] 🔵 Try to get summarize api!')
+          const summarize = await application.rapidapi.summarization({
+            text: translated[0],
+            num_sentences: 3,
+          })
+          ctx.logger.success('[Service/Text] 🟢 Summarize api has passed!')
+
+          /**
+           * With the result of the previous server, the next procedure
+           * connects to the rapidapi service to rewrite the text in order
+           * to prevent the result of possible plagiarism.
+           */
+          ctx.logger.success('[Service/Text] 🔵 Try to get rewriter text!')
+          const rewriter = await application.rapidapi.rewriter({
+            text: summarize.summary,
+            language: 'en',
+            strength: 3,
+          })
+          ctx.logger.success('[Service/Text] 🟢 Rewriter api has passed!')
+
+          /**
+           * It connects to the IBM service and brings some keywords
+           * based on the completed search, each sentence must generate
+           * one or more keywords to be used as a final resource.
+           */
+          ctx.logger.info('[Service/Text] 🔵 Try to get keywords with Watson!')
+          const analyzed = await watson.analyze({
             text: sentence.text,
             features: {
               keywords: {},
             },
           })
+          ctx.logger.success('[Service/Text] 🟢 Keywords from Watson passed!')
+
+          /**
+           * Add the result of the translations to the content,
+           * this will serve each sentence individually.
+           */
+          sentence.translated = translated.result.translations
+            .map((item) => item.translation)
+            .flat()
+
+          /**
+           * Add the result of the rewriter to the content,
+           * this will serve each sentence individually.
+           */
+          sentence.rewriter = rewriter.rewrite
+
+          /**
+           * Add the result of the translations to the content,
+           * this will serve each sentence individually.
+           */
+          const returnToDefault = await translator.translate({
+            text: [rewriter.rewrite],
+            source: 'en',
+            target: 'pt',
+          })
+
+          /**
+           * Add the result of the default text to the content,
+           * this will serve each sentence individually.
+           */
+          sentence.result = returnToDefault.result.translations
+            .map((item) => item.translation)
+            .flat()
 
           /**
            * It has the function of adding the necessary
            * keywords to the sentence object.
            */
-          sentence.keywords = result.keywords
+          sentence.keywords = analyzed.result.keywords
             .map((textualSentenceItem) => textualSentenceItem.text)
             .flat()
         }
-
-        ctx.logger.success('[Service/Text] 🟢 Keywords from Watson passed!')
 
         // Save
         application.state.save(content)
