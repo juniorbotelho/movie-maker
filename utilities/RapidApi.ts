@@ -50,7 +50,7 @@ const Wrapper: RapidAPIModuleFunction = () => ({
       },
     })
 
-    const response = await api.post<RapidSummarizationMethodResponse>('/', data)
+    const response = await api.post<RapidSummarizationMethodResponse>('', data)
 
     return response.data
   },
