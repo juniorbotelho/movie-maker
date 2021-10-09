@@ -35,23 +35,30 @@ const Wrapper: PowerPointModuleFunction = () => {
     margin: [0.25, 0.25, 0.25, 0.25],
     background: {
       path: 'temp/texture.jpg',
-      transparency: 20,
+      transparency: 80,
     },
     objects: [
       {
-        image: {
-          path: 'temp/background.jpg',
+        rect: {
+          align: 'center',
+          fill: {
+            color: '000000',
+            transparency: 25,
+          },
+          x: 0,
+          y: 0,
           w: '100%',
           h: '100%',
         },
       },
     ],
     slideNumber: {
+      fontFace: 'Abadi',
       fontSize: 23.6,
-      align: 'right',
       color: 'ffffff',
-      w: '100%',
+      w: 0.66,
       h: 0.52,
+      x: 10.54,
       y: 10.54,
     },
   })

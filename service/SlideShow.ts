@@ -20,15 +20,10 @@ const Service = () => ({
           masterName: 'MASTER_SLIDE',
         })
 
-        slide.addShape('squareTabs', {
-          align: 'center',
-          w: '100%',
-          h: '100%',
-        })
-
         slide.addText('Hello World!', {
           fontFace: 'Abadi',
           fontSize: 32,
+          color: 'ffffff',
           align: 'center',
           x: 0,
           y: 0.52,
@@ -40,8 +35,6 @@ const Service = () => ({
           fileName: 'temp/presentation.pptx',
           compression: false,
         })
-
-        process.exit()
       } catch (error) {
         ctx.logger.error(error)
         ctx.sentry.captureException(error)
@@ -56,5 +49,3 @@ const Service = () => ({
  * as the basis for all videoshow functions.
  */
 export const Context = Service()
-
-Context.slideshow()
