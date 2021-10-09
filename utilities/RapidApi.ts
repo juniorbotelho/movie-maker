@@ -35,7 +35,7 @@ const Wrapper: RapidAPIModuleFunction = () => ({
       },
     })
 
-    const response = await api.post<RapidRewriterMethodResponse>('/', data)
+    const response = await api.post<RapidRewriterMethodResponse>('', data)
 
     return response.data
   },
