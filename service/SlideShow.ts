@@ -4,66 +4,18 @@ import * as Main from '@App/Main'
 const Service = () => ({
   slideshow: () =>
     Main.Application(async ({ ctx, application }) => {
-      const content = application.state.load()
-
+      /**
+       * Defines Sentry as the service responsible for
+       * handling exceptions caused by N factors. All errors
+       * can be identified in the sentry.io dashboard.
+       */
       const transaction = ctx.sentry.startTransaction({
         name: 'Slideshow',
         op: 'Service/Slideshow',
         description: 'Service to handle with slideshow as powerpoint module.',
       })
 
-      /**
-       * Add user metadata to powerpoint project,
-       * this data may or may not be personal.
-       */
-      application.powerpoint.author = 'Personal'
-      application.powerpoint.company = 'Personal Company'
-      application.powerpoint.revision = '15'
-      application.powerpoint.subject = 'Slideshow Instagram'
-      application.powerpoint.title = content.searchTerm
-
-      /**
-       * Configure the layout of the project in power point,
-       * note that the example below defines that the
-       * project should have similar proportions to the
-       * instagram slides.
-       */
-      application.powerpoint.defineLayout({
-        name: 'INSTAGRAM',
-        width: 11.25,
-        height: 11.25,
-      })
-      application.powerpoint.layout = 'INSTAGRAM'
-      application.powerpoint.rtlMode = false
-
       try {
-        application.powerpoint.defineSlideMaster({
-          title: 'MASTER_SLIDE',
-          margin: [0.25, 0.25, 0.25, 0.25],
-          background: {
-            path: 'temp/texture.jpg',
-            transparency: 20,
-          },
-          objects: [
-            {
-              image: {
-                path: 'temp/background.jpg',
-                transparency: 40,
-                w: '100%',
-                h: '100%',
-              },
-            },
-          ],
-          slideNumber: {
-            fontSize: 23.6,
-            align: 'right',
-            color: 'ffffff',
-            w: '100%',
-            h: 0.52,
-            y: 10.54,
-          },
-        })
-
         const slide = application.powerpoint.addSlide({
           masterName: 'MASTER_SLIDE',
         })
