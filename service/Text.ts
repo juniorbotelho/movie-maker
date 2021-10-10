@@ -138,6 +138,7 @@ const Service = () => ({
          */
         for (const sentence of content.sentences) {
           console.clear()
+          if (steps > allSteps) break
           ctx.logger.info(`[Service/Text] 🚀 Step [${steps}] of [${allSteps}]`)
 
           /**
