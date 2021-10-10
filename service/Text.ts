@@ -127,12 +127,19 @@ const Service = () => ({
          */
         content.sentences = content.sentences.slice(0, content.maximumSentences)
 
+        // Config to steps
+        let steps = 1
+        const allSteps = content.sentences.length
+
         /**
          * This iteration is more dynamic than the 'map' by
          * Promise.all, prefer to use this format for
          * calls to remote APIs.
          */
         for (const sentence of content.sentences) {
+          console.clear()
+          ctx.logger.info(`[Service/Text] 🚀 Step [${steps}] of [${allSteps}]`)
+
           /**
            * It connects to the IBM translation service and
            * translates each sentence into the English language
@@ -161,6 +168,7 @@ const Service = () => ({
             num_sentences: 3,
           })
           ctx.logger.success('[Service/Text] 🟢 Summarize api has passed!')
+
           /**
            * With the result of the previous server, the next procedure
            * connects to the rapidapi service to rewrite the text in order
@@ -203,6 +211,12 @@ const Service = () => ({
           sentence.rewriter = rewriter.rewrite
 
           /**
+           * Add the result of the summarize api to the content,
+           * this will serve each sentence individually.
+           */
+          sentence.summarize = summarize.summary
+
+          /**
            * Add the result of the translations to the content,
            * this will serve each sentence individually.
            */
@@ -227,6 +241,9 @@ const Service = () => ({
           sentence.keywords = analyzed.result.keywords
             .map((textualSentenceItem) => textualSentenceItem.text)
             .flat()
+
+          // Add new step
+          steps += steps
         }
 
         // Save

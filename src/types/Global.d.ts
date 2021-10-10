@@ -7,6 +7,7 @@ export type StateSentence = {
   keywords: string[]
   images: string[]
   result: string[]
+  summarize?: string
   googleSearchQuery?: string
 }
 
