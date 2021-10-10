@@ -155,11 +155,12 @@ const Service = () => ({
            */
           ctx.logger.success('[Service/Text] 🔵 Try to get summarize api!')
           const summarize = await application.rapidapi.summarization({
-            text: translated[0],
+            text: translated.result.translations
+              .map((item) => item.translation)
+              .reduce((item) => item),
             num_sentences: 3,
           })
           ctx.logger.success('[Service/Text] 🟢 Summarize api has passed!')
-
           /**
            * With the result of the previous server, the next procedure
            * connects to the rapidapi service to rewrite the text in order
