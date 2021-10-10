@@ -26,8 +26,8 @@
   "scripts": {
     "start:server": "node --require module-alias/register build/src/index.js",
     "start:cli": "node --require module-alias/register build/cli/cli.js",
-    "dev:sucrase": "nodemon --watch '**/*' --require tsconfig-paths/register --config",
-    "dev:typescript": "nodemon --watch '**/*' --require tsconfig-paths/register --config",
+    "dev:package": "nodemon --watch '**/*' --require tsconfig-paths/register --config",
+    "dev:server": "nodemon --watch '**/*' --require tsconfig-paths/register server/Http.ts",
     "dev:cli": "node --require tsconfig-paths/register cli/bin/cli",
     "prebuild": "rimraf build/*",
     "build": "tsc -p tsconfig.json",
