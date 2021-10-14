@@ -7,7 +7,7 @@ export type StateSentence = {
   keywords: string[]
   images: string[]
   result: string[]
-  summarize?: string
+  summary?: string
   googleSearchQuery?: string
 }
 
@@ -37,10 +37,7 @@ export type StateRules = {
   sourceContentOriginal?: string
   sourceContentSanitized?: string
   sourceSummarized?: string
-  sourceLexical?: {
-    text: string
-    toplines: LexRankTopLines[]
-  }
+  summary?: string
   sentences?: StateSentence[]
 }
 
