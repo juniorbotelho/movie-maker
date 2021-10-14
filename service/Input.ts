@@ -108,10 +108,10 @@ const Service = () => ({
           await ctx.blog.request(
             localContent.customTopic,
             engine,
-            (response: Type.SiteSearchRequested) => {
-              localContent.searchTerm = response.title
-              localContent.sourceContentOriginal = response.content.text
-              localContent.sourceLexical = response.content
+            ({ content: ct, title }: Type.SiteSearchRequested) => {
+              localContent.searchTerm = title
+              localContent.sourceContentOriginal = ct.text
+              localContent.summary = ct.toplines.reduce((item) => item).text
             }
           )
         } else {

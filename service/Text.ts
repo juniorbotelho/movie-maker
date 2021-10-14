@@ -144,6 +144,10 @@ const Service = () => ({
 
       const content: Type.StateRules = application.state.load()
 
+      const watson = application.watson.nlu()
+
+      const translator = application.watson.ltd()
+
       const searchWith = {
         articleTerm: content.searchTerm,
         lang: 'en',
@@ -218,14 +222,14 @@ const Service = () => ({
          * new lexical content is generated and added to
          * the content object.
          */
-        if (!content.sourceLexical) {
+        if (!content.summary) {
           ctx.logger.info('[Service/Text] 🔵 Try to get lexical from lexrank.')
           const lexical = await application.lexical.lexrank({
             text: sanitized,
-            lineCount: 10,
+            lineCount: 3,
           })
           ctx.logger.success('[Service/Text] 🟢 Lexical from lexrank passed!')
-          content.sourceLexical = lexical
+          content.summary = lexical.toplines.reduce((item) => item).text
         }
 
         /**
@@ -253,17 +257,81 @@ const Service = () => ({
         content.sentences = content.sentences.slice(0, content.maximumSentences)
 
         /**
+         * Create the summary/summary of the downloaded text,
+         * this summary will be used to add an introduction
+         * to Instagram.
+         */
+        const getSummary = async () => {
+          ctx.logger.info('[Service/Text] 🔵 Getting summary from API!')
+          const { result: rText } = await translator.translate({
+            text: [content.sourceContentSanitized],
+            source: 'pt',
+            target: 'en',
+          })
+
+          const { summary } = await application.rapidapi.summarization({
+            text: rText.translations.reduce((i) => i).translation,
+            num_sentences: 3,
+          })
+
+          const { rewrite } = await application.rapidapi.rewriter({
+            text: summary,
+            language: 'en',
+            strength: 3,
+          })
+
+          const { result: rSum } = await translator.translate({
+            text: [rewrite],
+            source: 'en',
+            target: 'pt',
+          })
+          ctx.logger.success('[Service/Text] 🟢 Summary from API has passed!')
+
+          content.summary = rSum.translations.reduce((i) => i).translation
+        }
+
+        /**
          * Creates the content of keywords, texts and summaries
          * based on the arguments passed above, note that the
          * main function is disabled by the workaround.
          */
-        if (workaroundToDisableThis) {
-          Knowledges().build()
-        } else {
-          for (const sentence of content.sentences) {
-            console.log(sentence)
+        const getKeyword = async () => {
+          if (workaroundToDisableThis) {
+            Knowledges().build()
+          } else {
+            for (const sentence of content.sentences) {
+              /**
+               * It connects to the IBM service and brings some keywords
+               * based on the completed search, each sentence must generate
+               * one or more keywords to be used as a final resource.
+               */
+              ctx.logger.info('[Service/Text] 🔵 Getting keywords with Watson!')
+              const analyzed = await watson.analyze({
+                text: sentence.text,
+                features: {
+                  keywords: {},
+                },
+              })
+
+              /**
+               * It has the function of adding the necessary
+               * keywords to the sentence object.
+               */
+              sentence.keywords = analyzed.result.keywords
+                .map((textualSentenceItem) => textualSentenceItem.text)
+                .flat()
+              ctx.logger.success('[Service/Text] 🟢 Keywords has passed!')
+            }
           }
         }
+
+        /**
+         * Call to the functions that will perform the
+         * steps necessary for the text service to
+         * work correctly.
+         */
+        await getSummary()
+        await getKeyword()
 
         // Save
         application.state.save(content)
