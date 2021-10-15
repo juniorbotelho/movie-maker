@@ -13,7 +13,7 @@ const Site: Type.SiteModuleFunction = () => ({
 
       const blog = Axios.create({
         baseURL: application.site.engine(engine),
-        timeout: 30000,
+        timeout: 120000,
       })
 
       try {
@@ -41,7 +41,7 @@ const Site: Type.SiteModuleFunction = () => ({
 
       const blog = Axios.create({
         baseURL: application.site.engine(engine), // todo: add support for this: ctx.site.engine(engine),
-        timeout: 30000,
+        timeout: 120000,
       })
 
       try {
