@@ -108,9 +108,9 @@ const Service = () => ({
           await ctx.blog.request(
             localContent.customTopic,
             engine,
-            ({ content: ct, title }: Type.SiteSearchRequested) => {
+            ({ content: ct, title, sentences }: Type.SiteSearchRequested) => {
               localContent.searchTerm = title
-              localContent.sourceContentOriginal = ct.text
+              localContent.sourceContentOriginal = sentences.join(' ')
               localContent.summary = ct.toplines.reduce((item) => item).text
             }
           )
