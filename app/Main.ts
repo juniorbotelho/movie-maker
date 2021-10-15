@@ -23,6 +23,7 @@ import * as Image from '@Service/Image'
 import * as Slideshow from '@Service/SlideShow'
 import * as WebEngine from '@Container/WebEngine'
 import * as Registry from '@Container/Registry'
+import * as Updater from '@Container/Updater'
 import * as Blog from '@Sites/Blogs'
 import * as Type from '@Type/App'
 import * as Chalk from 'chalk'
@@ -56,6 +57,7 @@ export const Application = async (fnCallback: Type.MainCallback) =>
     toolbox: {
       native: Gluegun.Context,
       prompts: Prompts.Context,
+      updater: Updater.Context,
     },
     service: {
       input: Input.Context.input,
