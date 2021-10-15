@@ -6,7 +6,7 @@ import * as Chalk from 'chalk'
 console.log(Chalk.green('🚀 Loaded: Image'))
 
 const Service = () => ({
-  image: () =>
+  image: (fnCallback) =>
     Main.Application(async ({ ctx, application }) => {
       const transaction = ctx.sentry.startTransaction({
         name: 'Image Service',
@@ -82,6 +82,7 @@ const Service = () => ({
 
         // State
         application.state.save(content)
+        await fnCallback()
       } catch (error) {
         ctx.logger.error('[Service/Text] 🔴 '.concat(error))
         ctx.sentry.captureException(error)

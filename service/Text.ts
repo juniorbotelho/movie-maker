@@ -98,7 +98,7 @@ const Knowledges = () => ({
          * Add the result of the summarize api to the content,
          * this will serve each sentence individually.
          */
-        sentence.summarize = summarize.summary
+        sentence.summary = summarize.summary
 
         /**
          * Add the result of the translations to the content,

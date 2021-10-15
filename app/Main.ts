@@ -20,6 +20,7 @@ import * as Powerpoint from '@Utilities/PowerPoint'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
+import * as Slideshow from '@Service/SlideShow'
 import * as WebEngine from '@Container/WebEngine'
 import * as Registry from '@Container/Registry'
 import * as Blog from '@Sites/Blogs'
@@ -60,6 +61,7 @@ export const Application = async (fnCallback: Type.MainCallback) =>
       input: Input.Context.input,
       text: Text.Context.text,
       image: Image.Context.image,
+      slideshow: Slideshow.Context.slideshow,
     },
     config: {
       wikiParser: WikiParser.Config,

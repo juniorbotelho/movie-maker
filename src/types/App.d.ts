@@ -20,6 +20,7 @@ import * as Powerpoint from '@Utilities/PowerPoint'
 import * as Input from '@Service/Input'
 import * as Text from '@Service/Text'
 import * as Image from '@Service/Image'
+import * as Slideshow from '@Service/SlideShow'
 import * as WebEngine from '@Container/WebEngine'
 import * as Registry from '@Container/Registry'
 import * as Blog from '@Sites/Blogs'
@@ -63,6 +64,7 @@ export type MainCallback = (fnCallback: {
     input: typeof Input.Context.input
     text: typeof Text.Context.text
     image: typeof Image.Context.image
+    slideshow: typeof Slideshow.Context.slideshow
   }
   config: {
     wikiParser: typeof WikiParser.Config
