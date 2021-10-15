@@ -327,11 +327,13 @@ const Service = () => ({
                * connects to the rapidapi service to rewrite the text in order
                * to prevent the result of possible plagiarism.
                */
+              ctx.logger.success('[Service/Text] 🔵 Try to get rewriter text!')
               const { rewrite } = await application.rapidapi.rewriter({
                 text: sentence.text,
                 language: 'pt',
                 strength: 3,
               })
+              ctx.logger.success('[Service/Text] 🟢 Rewriter api has passed!')
 
               sentence.text = rewrite
 
