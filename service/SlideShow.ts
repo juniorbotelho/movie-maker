@@ -28,13 +28,13 @@ const Service = () => ({
 
           slide.addText(sentence.text, {
             fontFace: 'Abadi',
-            fontSize: 24,
+            fontSize: 28,
             color: 'ffffff',
             align: 'left',
-            x: 2.5,
+            x: 2,
             y: 5.25,
-            w: '50%',
-            h: '20%',
+            w: '70%',
+            h: '30%',
           })
         })
 
@@ -42,8 +42,6 @@ const Service = () => ({
           fileName: 'temp/presentation.pptx',
           compression: false,
         })
-
-        ctx.logger.info('Slideshow has created!')
         process.exit()
       } catch (error) {
         ctx.logger.error(error)
