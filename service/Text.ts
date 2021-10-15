@@ -299,7 +299,16 @@ const Service = () => ({
           if (workaroundToDisableThis) {
             Knowledges().build()
           } else {
+            // Config to steps
+            let steps = 1
+            const allSteps = content.sentences.length
+
             for (const sentence of content.sentences) {
+              console.clear()
+              ctx.logger.info(
+                `[Service/Text] 🚀 Step [${steps}] of [${allSteps}]`
+              )
+
               /**
                * It connects to the IBM service and brings some keywords
                * based on the completed search, each sentence must generate
@@ -314,6 +323,19 @@ const Service = () => ({
               })
 
               /**
+               * With the result of the previous server, the next procedure
+               * connects to the rapidapi service to rewrite the text in order
+               * to prevent the result of possible plagiarism.
+               */
+              const { rewrite } = await application.rapidapi.rewriter({
+                text: sentence.text,
+                language: 'pt',
+                strength: 3,
+              })
+
+              sentence.text = rewrite
+
+              /**
                * It has the function of adding the necessary
                * keywords to the sentence object.
                */
@@ -321,6 +343,8 @@ const Service = () => ({
                 .map((textualSentenceItem) => textualSentenceItem.text)
                 .flat()
               ctx.logger.success('[Service/Text] 🟢 Keywords has passed!')
+              // Add new step
+              steps = steps + 1
             }
           }
         }
