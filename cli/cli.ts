@@ -27,7 +27,6 @@ export async function run(
       run: () => {
         Main.Application(async ({ service, toolbox }) => {
           await toolbox.updater.update()
-          console.clear()
 
           /**
            * Main services are initializing here, all this

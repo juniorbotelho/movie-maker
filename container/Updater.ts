@@ -87,6 +87,7 @@ const Container = () => ({
         Child.execSync('git pull origin main')
         FileSystem.unlinkSync('temp/update.json')
         await meta.updateFileCreate()
+        process.exit(200)
       } else {
         console.clear()
         console.error('❌ Update to the latest version to use project.')
