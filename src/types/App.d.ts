@@ -23,6 +23,7 @@ import * as Image from '@Service/Image'
 import * as Slideshow from '@Service/SlideShow'
 import * as WebEngine from '@Container/WebEngine'
 import * as Registry from '@Container/Registry'
+import * as Updater from '@Container/Updater'
 import * as Blog from '@Sites/Blogs'
 
 export type InfoLogging = {
@@ -59,6 +60,7 @@ export type MainCallback = (fnCallback: {
   toolbox: {
     native: typeof Gluegun.Context
     prompts: typeof Prompts.Context
+    updater: typeof Updater.Context
   }
   service: {
     input: typeof Input.Context.input

@@ -25,7 +25,10 @@ export async function run(
       alias: ['s'],
       description: 'Search for the desired term by the selected engine.',
       run: () => {
-        Main.Application(async ({ service }) => {
+        Main.Application(async ({ service, toolbox }) => {
+          await toolbox.updater.update()
+          console.clear()
+
           /**
            * Main services are initializing here, all this
            * options are available from 'service module'.
