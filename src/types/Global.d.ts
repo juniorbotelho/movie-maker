@@ -96,8 +96,11 @@ export type SiteSearchResponse = {
 }
 
 export type SiteSearchRequested = {
+  intro: string[]
   title: string
+  titles: string[]
   content: LexRankResponse
+  sentences: string[]
 }
 
 export type WebEngineContainerBuilder = {
