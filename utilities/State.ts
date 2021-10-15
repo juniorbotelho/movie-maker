@@ -32,7 +32,7 @@ const Wrapper = () => ({
     const script = 'var content = {value}'.replace('{value}', rulesAsJS)
     return FileSystem.writeFileSync(scripting, script)
   },
-  load: () => {
+  load: (): Type.StateRules => {
     const buffer = FileSystem.readFileSync(content, 'UTF-8')
     return JSON.parse(buffer)
   },

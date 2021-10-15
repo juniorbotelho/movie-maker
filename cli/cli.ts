@@ -32,7 +32,9 @@ export async function run(
            */
           await service.input(async () => {
             await service.text(async () => {
-              await service.image()
+              await service.image(async () => {
+                await service.slideshow()
+              })
             })
           })
         })

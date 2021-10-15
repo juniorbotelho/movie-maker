@@ -15,26 +15,36 @@ const Service = () => ({
         description: 'Service to handle with slideshow as powerpoint module.',
       })
 
-      try {
-        const slide = application.powerpoint.addSlide({
-          masterName: 'MASTER_SLIDE',
-        })
+      const content = application.state.load()
 
-        slide.addText('Hello World!', {
-          fontFace: 'Abadi',
-          fontSize: 32,
-          color: 'ffffff',
-          align: 'center',
-          x: 0,
-          y: 0.52,
-          w: '100%',
-          h: '10%',
+      try {
+        /**
+         *
+         */
+        content.sentences.forEach((sentence) => {
+          const slide = application.powerpoint.addSlide({
+            masterName: 'MASTER_SLIDE',
+          })
+
+          slide.addText(sentence.text, {
+            fontFace: 'Abadi',
+            fontSize: 24,
+            color: 'ffffff',
+            align: 'left',
+            x: 2.5,
+            y: 5.25,
+            w: '50%',
+            h: '20%',
+          })
         })
 
         await application.powerpoint.writeFile({
           fileName: 'temp/presentation.pptx',
           compression: false,
         })
+
+        ctx.logger.info('Slideshow has created!')
+        process.exit()
       } catch (error) {
         ctx.logger.error(error)
         ctx.sentry.captureException(error)
