@@ -30,6 +30,7 @@ export type SiteModuleFunction = () => {
   search: (
     search: string,
     engine: string,
+    page: number,
     fnCallback: SiteModuleFunctionCallback
   ) => Promise<void>
   request: (

@@ -79,26 +79,43 @@ const Service = () => ({
         }
 
         if (application.registry.listAll().includes(engine)) {
+          let nextPage = 1 // TODO: Workaround, use nextPage function from ctx.blog
+
           /**
            * Search for the requested topic through a pre-created
            * template and add the result of that search in link
            * format to localContent.
            */
-          await ctx.blog.search(
-            search,
-            engine,
-            async (response: Type.SiteSearchResponse) => {
-              localContent.customTopic = await toolbox.prompts.select<string>({
-                type: 'multiselect',
-                name: 'selectedOption',
-                message: 'Choose one of available topics',
-                choices: response.posts.map((item) => ({
-                  title: item.title,
-                  value: item.link,
-                })),
-              })
-            }
-          )
+          while (!isNaN(nextPage)) {
+            await ctx.blog.search(
+              search,
+              engine,
+              nextPage,
+              async (response: Type.SiteSearchResponse) => {
+                response.posts.push({
+                  ...response.posts,
+                  index: 999, // TODO: Workaround
+                  link: response.pagination.next.toString(),
+                  title: 'Next Page',
+                })
+
+                localContent.customTopic = await toolbox.prompts.select<string>(
+                  {
+                    type: 'multiselect',
+                    name: 'selectedOption',
+                    message: 'Choose one of available topics',
+                    choices: response.posts.map((item) => ({
+                      title: item.title,
+                      value: item.link,
+                    })),
+                  }
+                )
+
+                // TODO: Fix this workaround belong to nextPage variable
+                nextPage = Number.parseInt(localContent.customTopic)
+              }
+            )
+          }
 
           /**
            * Based on the previous search, the 'localContent' state now

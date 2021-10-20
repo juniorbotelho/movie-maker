@@ -3,7 +3,7 @@ import * as Main from '@App/Main'
 import * as Type from '@Type/Site'
 
 const Site: Type.SiteModuleFunction = () => ({
-  search: async (search, engine, fnCallback) =>
+  search: async (search, engine, page, fnCallback) =>
     await Main.Application(async ({ ctx, application }) => {
       const transaction = ctx.sentry.startTransaction({
         name: 'Blog Search',
@@ -20,6 +20,7 @@ const Site: Type.SiteModuleFunction = () => ({
         const response = await application.site.search({
           blog: blog,
           search: search,
+          page: page,
         })
 
         // TODO: make this callback type in a real promise
